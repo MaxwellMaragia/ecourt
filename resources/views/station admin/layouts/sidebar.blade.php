@@ -28,6 +28,19 @@
                   <li><a href="{{ route('agents.create') }}"><i class="fa fa-circle-o"></i>Create new</a></li>
               </ul>
           </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-gavel"></i>
+                  <span>Cases</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{ url('active_cases') }}"><i class="fa fa-circle-o"></i>Active</a></li>
+                  <li><a href="{{ url('closed_cases') }}"><i class="fa fa-circle-o"></i>Closed</a></li>
+              </ul>
+          </li>
     </ul>
 
 

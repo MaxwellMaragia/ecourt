@@ -29,6 +29,9 @@ Route::get('/', function () {
 });
 
 Route::get('changepassword', [\App\Http\Controllers\Profile::class,'create']);
+Route::get('active_cases', [\App\Http\Controllers\DisplayCasesController::class,'active']);
+Route::get('closed_cases', [\App\Http\Controllers\DisplayCasesController::class,'closed']);
+Route::get('/case/{id}',[\App\Http\Controllers\DisplayCasesController::class,'IndividualCase']);
 
 Auth::routes();
 
