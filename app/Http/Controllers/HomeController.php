@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\court;
+use App\Models\court_user;
+use App\Models\misdeed;
 use App\Models\station;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,7 +49,10 @@ class HomeController extends Controller
                   return view('magistrate.home');
               }
               else if(Auth::user()->category == 'prosecutor'){
-                  return view('prosecutor.home');
+                  $user_id = Auth::user()->id;
+                  $cases = misdeed::where('prosecutor',$user_id)->get();
+
+                  return view('prosecutor.home',compact('cases'));
               }
               else{
                   return redirect(route('login'));

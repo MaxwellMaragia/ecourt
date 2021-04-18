@@ -26,6 +26,25 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="table-responsive">
+
+                    <div class="form-group form-inline">
+                        @include('includes.messages')
+                        <form action="{{ route('assignprosecutor',$case->id) }}" method="post">
+                            {{ csrf_field() }}
+                            <select name="court" id="court"  class="form-control" required="required">
+                                <option value="">Select court</option>
+                                @foreach($courts as $court)
+                                    <option value="{{ $court->id }}">{{ $court->name }}</option>
+                                @endforeach
+                            </select>
+                            <select name="prosecutor" id="prosecutor" class="form-control" required="required">
+                                <option value="">Select prosecutor</option>
+                            </select>
+                            <button class="btn btn-info" type="submit">Assign case</button>
+                        </form>
+                    </div>
+
+
                   <table class="table table-bordered table-stripped">
                       <tr>
                           <td><b>Offenders name</b></td>
@@ -104,7 +123,28 @@
 </div>
 
 @section('footerSection')
-
+    <script>
+        $('#court').change(function(){
+            var cid = $(this).val();
+            if(cid){
+                $.ajax({
+                    type:"get",
+                    url:"{{ url('/getProsecutor')}}/"+cid,
+                    success:function(res)
+                    {
+                        if(res)
+                        {
+                            $("#prosecutor").empty();
+                            $("#prosecutor").append('<option value="">Select Prosecutor</option>');
+                            $.each(res,function(key,value){
+                                $("#prosecutor").append('<option value="'+key+'">'+value+'</option>');
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
 
 @endsection

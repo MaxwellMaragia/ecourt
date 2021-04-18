@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\court;
 use App\Models\court_user;
+use App\Models\station_user;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\misdeed;
@@ -18,10 +20,23 @@ class DisplayCasesController extends Controller
     public function active(){
         if(Auth::user()->category == 'station admin'){
             $user_id = Auth::user()->id;
-            $court_id = court_user::where('user_id',$user_id)->first();
 
-            $cases = misdeed::where('dismissed','1')->get();
-            return view('station admin.cases.active',compact('cases'));
+            //fetch police from station
+            $station_user = station_user::where('user_id',$user_id)->first();
+            $station_id = $station_user->station_id;
+            $agent_ids = station_user::where('station_id',$station_id)->get();
+            foreach($agent_ids as $agent_id){
+                $agents = User::where('id',$agent_id->user_id)->get();
+            }
+            //end
+            foreach($agents as $agent){
+                if($agent->category == 'agent'){
+                    $cases = misdeed::where('agent',$agent->id)->get();
+                }
+                return view('station admin.cases.active',compact('cases','agents'));
+            }
+
+
         }
         else{
             redirect(route('login'));
@@ -38,6 +53,7 @@ class DisplayCasesController extends Controller
     public function IndividualCase($id)
     {
         $case = misdeed::where('id',$id)->first();
-        return view('station admin.cases.case',compact('case'));
+        $courts = court::all();
+        return view('station admin.cases.case',compact('case','courts'));
     }
 }

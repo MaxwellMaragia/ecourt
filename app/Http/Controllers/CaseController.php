@@ -124,6 +124,15 @@ class CaseController extends Controller
         //
     }
 
+    public function assignProsecutor(Request $request, $id)
+    {
+        $misdeed = misdeed::find($id);
+        $misdeed->prosecutor = $request->prosecutor;
+        $misdeed->save();
+
+        return redirect()->back()->with('success', 'Prosecutor for case selected');
+    }
+
     public function destroy($id)
     {
         //

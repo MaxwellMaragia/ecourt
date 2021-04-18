@@ -23,6 +23,8 @@ Route::resource('cases',\App\Http\Controllers\CaseController::class);
 Route::resource('magistrates',\App\Http\Controllers\MagistrateController::class);
 Route::resource('offences',\App\Http\Controllers\OffenceController::class);
 Route::post('change-password',[\App\Http\Controllers\Profile::class, 'changepassword'])->name('changepassword');
+Route::post('case/{id}',[\App\Http\Controllers\CaseController::class, 'assignProsecutor'])->name('assignprosecutor');
+Route::post('case_outcome/{id}',[\App\Http\Controllers\ProsecutorController::class, 'assignMagistrate'])->name('assignmagistrate');
 Route::get('/getProsecutor/{id}',[\App\Http\Controllers\CaseController::class,'getProsecutors']);
 Route::get('/', function () {
     return view('home');
@@ -32,6 +34,7 @@ Route::get('changepassword', [\App\Http\Controllers\Profile::class,'create']);
 Route::get('active_cases', [\App\Http\Controllers\DisplayCasesController::class,'active']);
 Route::get('closed_cases', [\App\Http\Controllers\DisplayCasesController::class,'closed']);
 Route::get('/case/{id}',[\App\Http\Controllers\DisplayCasesController::class,'IndividualCase']);
+Route::get('/case_outcome/{id}',[\App\Http\Controllers\ProsecutorController::class,'IndividualCase']);
 
 Auth::routes();
 
