@@ -50,18 +50,21 @@ class ProsecutorController extends Controller
         //get court id
         $user_id = Auth::user()->id;
         $court = court_user::where('user_id',$user_id)->first();
-        $magistrate_ids = court_user::where('court_id',$court->court_id)->get('user_id');
-        //dd($magistrate_ids);
+        $court_id = $court->court_id;
+        $users = User::where('category','magistrate')->get();
+
+        //$users = User::join('users','users.id','=','court_user.user_id')->select('user.*','court_user.court_id as cid')->get();
 
 
-        foreach($magistrate_ids as $magistrate_id){
 
-            $magistrates = User::where('id',$magistrate_id->user_id)->get()->toArray();
+//       foreach($magistrate_ids as $magistrate_id){
+//
+//            $magistrates = User::where('id',$magistrate_id->user_id)->get()->toArray();
+//
+//
+//        }
 
-
-        }
-
-        return view('prosecutor.cases.case',compact('case','magistrates'));
+        return view('prosecutor.cases.case',compact('case','users','court_id'));
     }
 
     public function assignMagistrate(Request $request, $id)

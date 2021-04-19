@@ -51,8 +51,8 @@
                                             <select name="magistrate" id="prosecutor" class="form-control ">
                                                 <option value="">Select magistrate</option>
 
-                                                @foreach($magistrates as $magistrate)
-                                                    <option value="{{ $magistrate['id'] }}">{{ $magistrate['name'] }}</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
