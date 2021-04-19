@@ -91,7 +91,12 @@ class CaseController extends Controller
           $misdeed->particulars = $request->particulars;
           $misdeed->mitigating = $request->mitigating;
           $misdeed->agent = Auth::user()->id;
-          $misdeed->dismissed = $request->dismissed;
+          if($request->dismissed){
+              $misdeed->dismissed = $request->dismissed;
+          }else{
+              $misdeed->dismissed = 0;
+          }
+
           $misdeed->offender_decision = 1;
           if($request->hasFile('image'))
           {
