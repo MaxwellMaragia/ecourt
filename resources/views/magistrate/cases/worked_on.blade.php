@@ -1,4 +1,4 @@
-@extends('station admin.layouts.app')
+@extends('prosecutor.layouts.app')
 @section('headSection')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -8,7 +8,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Active cases
+                Cases you have worked on
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,7 +21,6 @@
 
             <!-- Default box -->
             <div class="box">
-
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="table-responsive">
@@ -39,37 +38,35 @@
                             </thead>
                             <tbody>
                             @foreach($cases as $case)
-                                   @if(strlen($case->prosecutor)<1)
-                                       <tr>
-                                           <td>{{ $loop->index + 1 }}</td>
-                                           <td>{{ $case->offender_name }}</td>
-                                           <td>{{ $case->identification }}</td>
-                                           <td>{{ $case->offender_mobile }}</td>
-                                           <td>{{ $case->offence_location }}</td>
-                                           <td>
-                                               @foreach($case->offences as $offence)
-                                                   {{ $offence->offence }}
-                                                   @if( !$loop->last)
-                                                       ,
-                                                   @endif
-                                               @endforeach
-                                           </td>
-                                           <td>
-                                               <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('case',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                           </td>
-                                       </tr>
-                                       @endif
+                               @if(strlen($case->magistrate_decision)>0)
+                                   <tr>
+                                       <td>{{ $loop->index + 1 }}</td>
+                                       <td>{{ $case->offender_name }}</td>
+                                       <td>{{ $case->identification }}</td>
+                                       <td>{{ $case->offender_mobile }}</td>
+                                       <td>{{ $case->offence_location }}</td>
+                                       <td>
+                                           @foreach($case->offences as $offence)
+                                               {{ $offence->offence }}
+                                               @if( !$loop->last)
+                                                   ,
+                                               @endif
+                                           @endforeach
+                                       </td>
+                                       <td>
+                                           <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('view_case',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                       </td>
+                                   </tr>
+                               @endif
                             @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th>S.no</th>
                                 <th>Names</th>
-                                <th>Identification</th>
-                                <th>Mobile</th>
-                                <th>Incident location</th>
-                                <th>Offences</th>
-                                <th>Open</th>
+                                <th>Staff id</th>
+                                <th>Email</th>
+                                <th>Actions</th>
                             </tr>
                             </tfoot>
                         </table>

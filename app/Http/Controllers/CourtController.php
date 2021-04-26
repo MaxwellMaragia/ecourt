@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\isEmpty;
 
 class CourtController extends Controller
 {
@@ -48,6 +49,8 @@ class CourtController extends Controller
         $court = new court();
         $court->name = $request->name;
         $court->location = $request->location;
+
+
 
         $court->save();
         return (redirect()->back()->with('success', 'court saved successfully'));

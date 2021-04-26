@@ -30,7 +30,7 @@
                         <div class="form-group">
                             @include('includes.messages')
                             @if($edit == 1)
-                                <form action="{{ route('assignmagistrate',$case->id) }}" method="post">
+                                <form action="{{ route('decidecase',$case->id) }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group">
                                         <div class="radio">
@@ -49,14 +49,7 @@
                                     <div class="hide check">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <select name="magistrate" id="prosecutor" class="form-control ">
-                                                    <option value="">Select magistrate</option>
-                                                    @foreach($court->users as $key => $user)
-                                                        @if($user->category == 'magistrate')
-                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
+                                                <input type="number" class="form-control" placeholder="Enter fine amount" id="fine" name="fine" value="{{ old('fine') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -154,8 +147,8 @@
                                     @elseif($case->prosecutor_decision == 0)
                                         Case invalid/dismissed
                                     @else
-                                    N/A
-                                        @endif
+                                        N/A
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -171,7 +164,7 @@
                             <tr>
                                 <td><b>Magistrate</b></td>
                                 <td>
-                                   {{ $magistrate->name }}
+                                    {{ $magistrate->name }}
                                 </td>
                             </tr>
                             <tr>
@@ -219,39 +212,19 @@
 
 @section('footerSection')
     <script>
-        $('#court').change(function(){
-            var cid = $(this).val();
-            if(cid){
-                $.ajax({
-                    type:"get",
-                    url:"{{ url('/getProsecutor')}}/"+cid,
-                    success:function(res)
-                    {
-                        if(res)
-                        {
-                            $("#prosecutor").empty();
-                            $("#prosecutor").append('<option value="">Select Prosecutor</option>');
-                            $.each(res,function(key,value){
-                                $("#prosecutor").append('<option value="'+key+'">'+value+'</option>');
-                            });
-                        }
-                    }
-                });
-            }
-        });
 
         $('#proceed').change(function(){
             if($(this).is(":checked")) {
 
                 $('div.check').removeClass("hide");
-                $('#prosecutor').attr('required','required');
+                $('#fine').attr('required','required');
 
             }
         });
         $('#terminate').change(function(){
             if($(this).is(":checked")) {
                 $('div.check').addClass("hide");
-                $('#prosecutor').removeAttr('required');
+                $('#fine').removeAttr('required');
 
             }
         });

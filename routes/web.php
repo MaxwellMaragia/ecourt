@@ -25,6 +25,13 @@ Route::resource('offences',\App\Http\Controllers\OffenceController::class);
 Route::post('change-password',[\App\Http\Controllers\Profile::class, 'changepassword'])->name('changepassword');
 Route::post('case/{id}',[\App\Http\Controllers\CaseController::class, 'assignProsecutor'])->name('assignprosecutor');
 Route::post('case_outcome/{id}',[\App\Http\Controllers\ProsecutorController::class, 'assignMagistrate'])->name('assignmagistrate');
+Route::get('cases_worked_on', [\App\Http\Controllers\ProsecutorController::class,'workedon'])->name('workedon');
+Route::get('cases_you_worked_on', [\App\Http\Controllers\MagistrateController::class,'workedon'])->name('workedon-magistrate');
+Route::post('select_case_outcome/{id}',[\App\Http\Controllers\MagistrateController::class, 'decideCase'])->name('decidecase');
+Route::get('/select_case_outcome/{id}',[\App\Http\Controllers\MagistrateController::class,'IndividualCase']);
+Route::get('/view_case/{id}',[\App\Http\Controllers\MagistrateController::class,'viewCase']);
+Route::get('/viewcase/{id}',[\App\Http\Controllers\ProsecutorController::class,'viewCase']);
+Route::get('/open-case/{id}',[\App\Http\Controllers\DisplayCasesController::class,'viewCase']);
 Route::get('/getProsecutor/{id}',[\App\Http\Controllers\CaseController::class,'getProsecutors']);
 Route::get('/', function () {
     return view('home');

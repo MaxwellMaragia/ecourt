@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\court;
 use App\Models\court_user;
+use App\Models\misdeed;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -104,5 +105,65 @@ class MagistrateController extends Controller
     {
         User::where('id', $id)->delete();
         return redirect()->back()->with('success', 'magistrate deleted successfully');
+    }
+
+
+    //For fetching states
+    public function IndividualCase($id)
+    {
+        $case = misdeed::where('id',$id)->first();
+        //get court id
+        $user_id = Auth::user()->id;
+        $get_court = court_user::where('user_id',$user_id)->first();
+        $court_id = $get_court->court_id;
+
+        $court = court::find($court_id);
+        $edit = 1;
+        $prosecutor_id = $case->prosecutor;
+        $prosecutor = User::find($prosecutor_id);
+        $magistrate_id = $case->magistrate;
+        $magistrate = User::find($magistrate_id);
+        return view('magistrate.cases.case',compact('case','court','edit','prosecutor','magistrate'));
+    }
+
+    //For fetching states
+    public function viewCase($id)
+    {
+        $case = misdeed::where('id',$id)->first();
+        //get court id
+        $edit = 0;
+        $prosecutor_id = $case->prosecutor;
+        $prosecutor = User::find($prosecutor_id);
+        $magistrate_id = $case->magistrate;
+        $magistrate = User::find($magistrate_id);
+        return view('magistrate.cases.case',compact('case','edit','prosecutor','magistrate'));
+    }
+
+    public function workedon(){
+        $user_id = Auth::user()->id;
+        $cases = misdeed::where('magistrate',$user_id)->get();
+
+        return view('magistrate.cases.worked_on',compact('cases'));
+    }
+
+    public function decideCase(Request $request, $id)
+    {
+        $this->validate($request, [
+            'reason' => 'required'
+        ]);
+
+        $misdeed = misdeed::find($id);
+
+        if($request->outcome == 1){
+            $misdeed->fine = $request->fine;
+            $misdeed->magistrate_decision = $request->outcome;
+        }else if($request->outcome == 0){
+            $misdeed->magistrate_decision = $request->outcome;
+        }
+
+        $misdeed->magistrate_decision_reason = $request->reason;
+        $misdeed->save();
+
+        return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 }

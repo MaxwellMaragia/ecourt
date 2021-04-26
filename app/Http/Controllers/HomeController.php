@@ -46,17 +46,21 @@ class HomeController extends Controller
                   return redirect(route('cases.create'));
               }
               else if(Auth::user()->category == 'magistrate'){
-                  return view('magistrate.home');
+                  $user_id = Auth::user()->id;
+                  $cases = misdeed::where('magistrate',$user_id)->get();
+
+                  return view('magistrate.home',compact('cases'));
+
               }
               else if(Auth::user()->category == 'prosecutor'){
                   $user_id = Auth::user()->id;
-                  $cases = misdeed::where('prosecutor',$user_id)->get();
+                  $cases = misdeed::where('prosecutor',$user_id AND 'magistrate',NULL)->get();
 
                   return view('prosecutor.home',compact('cases'));
               }
               else{
                   return redirect(route('login'));
-              }
-          }
-    }
+         }
+      }
+   }
 }

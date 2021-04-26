@@ -18,26 +18,6 @@ class ProsecutorController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
     public function CaseOutcome(Request $request, $id)
     {
         //
@@ -49,22 +29,36 @@ class ProsecutorController extends Controller
         $case = misdeed::where('id',$id)->first();
         //get court id
         $user_id = Auth::user()->id;
-        $court = court_user::where('user_id',$user_id)->first();
-        $court_id = $court->court_id;
-        $users = User::where('category','magistrate')->get();
+        $get_court = court_user::where('user_id',$user_id)->first();
+        $court_id = $get_court->court_id;
 
-        //$users = User::join('users','users.id','=','court_user.user_id')->select('user.*','court_user.court_id as cid')->get();
+        $court = court::find($court_id);
+        $edit = 1;
+        $prosecutor_id = $case->prosecutor;
+        $prosecutor = User::find($prosecutor_id);
+        $magistrate_id = $case->magistrate;
+        $magistrate = User::find($magistrate_id);
+        return view('prosecutor.cases.case',compact('case','court','edit','prosecutor','magistrate'));
+    }
 
+    //For fetching states
+    public function viewCase($id)
+    {
+        $case = misdeed::where('id',$id)->first();
+        //get court id
+        $prosecutor_id = $case->prosecutor;
+        $prosecutor = User::find($prosecutor_id);
+        $magistrate_id = $case->magistrate;
+        $magistrate = User::find($magistrate_id);
+        $edit = 0;
+        return view('prosecutor.cases.case',compact('case','edit','prosecutor','magistrate'));
+    }
 
+    public function workedon(){
+        $user_id = Auth::user()->id;
+        $cases = misdeed::where('prosecutor',$user_id)->get();
 
-//       foreach($magistrate_ids as $magistrate_id){
-//
-//            $magistrates = User::where('id',$magistrate_id->user_id)->get()->toArray();
-//
-//
-//        }
-
-        return view('prosecutor.cases.case',compact('case','users','court_id'));
+        return view('prosecutor.cases.worked_on',compact('cases'));
     }
 
     public function assignMagistrate(Request $request, $id)
@@ -88,8 +82,5 @@ class ProsecutorController extends Controller
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 
-    public function destroy($id)
-    {
-        //
-    }
+
 }

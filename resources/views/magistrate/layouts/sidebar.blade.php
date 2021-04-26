@@ -25,7 +25,7 @@
               </a>
               <ul class="treeview-menu">
                   <li><a href="{{ route('home') }}"><i class="fa fa-circle-o"></i>Active</a></li>
-                  <li><a href="{{ route('workedon') }}"><i class="fa fa-circle-o"></i>Worked on</a></li>
+                  <li><a href="{{ route('workedon-magistrate') }}"><i class="fa fa-circle-o"></i>Worked on</a></li>
               </ul>
           </li>
     </ul>
