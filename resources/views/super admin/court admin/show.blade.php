@@ -47,7 +47,7 @@
                                     <td>{{ $court_admin->staff_id }}</td>
                                     <td>{{ $court_admin->email }}</td>
                                     <td>
-                                        @foreach($court_admin->courts as $court)
+                                        @foreach($court_admin->courts as $key => $court)
                                             {{ $court->name }}
                                             @if( !$loop->last)
                                                 ,

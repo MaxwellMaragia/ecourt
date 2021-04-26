@@ -46,9 +46,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\station','station_users');
     }
 
-    public function court()
+    public function courts()
     {
-        return $this->belongsTo(court::class,'court_users');
+        return $this->belongsToMany('App\Models\court','court_users');
     }
 
 

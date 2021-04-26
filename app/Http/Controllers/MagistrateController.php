@@ -9,9 +9,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use NotificationChannels\AfricasTalking\AfricasTalkingChannel;
+use NotificationChannels\AfricasTalking\AfricasTalkingMessage;
 
 class MagistrateController extends Controller
 {
+
 
 
     public function index()
@@ -163,7 +166,7 @@ class MagistrateController extends Controller
 
         $misdeed->magistrate_decision_reason = $request->reason;
         $misdeed->save();
-
+        $misdeed->notify(new SendNotification());
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 }
