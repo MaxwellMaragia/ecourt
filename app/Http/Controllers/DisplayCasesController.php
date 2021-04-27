@@ -81,6 +81,7 @@ class DisplayCasesController extends Controller
         $prosecutor = User::find($prosecutor_id);
         $magistrate_id = $case->magistrate;
         $magistrate = User::find($magistrate_id);
+
         return view('station admin.cases.case',compact('case','courts','edit','prosecutor','magistrate'));
     }
 

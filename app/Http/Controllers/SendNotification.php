@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Notifications\Notification;
+
+use Illuminate\Support\Facades\Notification;
 use NotificationChannels\AfricasTalking\AfricasTalkingChannel;
 use NotificationChannels\AfricasTalking\AfricasTalkingMessage;
 

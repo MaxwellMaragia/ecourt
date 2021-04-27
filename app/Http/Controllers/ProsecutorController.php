@@ -76,7 +76,7 @@ class ProsecutorController extends Controller
            $misdeed->prosecutor_decision = $request->outcome;
         }
 
-        $misdeed->prosecutor_decision_reason = $request->outcome;
+        $misdeed->prosecutor_decision_reason = $request->reason;
         $misdeed->save();
 
         return redirect()->back()->with('success', 'Case outcome successfully saved');

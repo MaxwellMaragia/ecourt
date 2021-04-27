@@ -12,7 +12,6 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{ url('active_cases') }}">Cases</a></li>
                 <li class="active">Case</li>
             </ol>
         </section>
@@ -65,9 +64,17 @@
                                 </form>
                                 @endif
                         </div>
-
-
                         <table class="table table-bordered table-stripped">
+                            <tr>
+                                <td><b>Case status</b></td>
+                                <td>
+                                    @if($case->dismissed == 0)
+                                        Active
+                                    @else
+                                        Dismissed
+                                    @endif
+                                </td>
+                            </tr>
                             <tr>
                                 <td><b>Offenders name</b></td>
                                 <td>{{ $case->offender_name }}</td>
@@ -136,7 +143,10 @@
                             <tr>
                                 <td><b>Prosecutor</b></td>
                                 <td>
-                                    {{ $prosecutor->name }}
+
+                                    @if(!is_null($prosecutor))
+                                        {{ $prosecutor->name }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -144,7 +154,7 @@
                                 <td>
                                     @if($case->prosecutor_decision == 1)
                                         Case is valid
-                                    @elseif($case->prosecutor_decision == 0)
+                                    @elseif($case->prosecutor_decision == 0 && !is_null($case->prosecutor_decision))
                                         Case invalid/dismissed
                                     @else
                                         N/A
@@ -164,7 +174,9 @@
                             <tr>
                                 <td><b>Magistrate</b></td>
                                 <td>
-                                    {{ $magistrate->name }}
+                                    @if(!is_null($magistrate))
+                                        {{ $magistrate->name }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -172,7 +184,7 @@
                                 <td>
                                     @if($case->magistrate_decision == 1)
                                         Case is valid
-                                    @elseif($case->magistrate_decision == 0)
+                                    @elseif($case->magistrate_decision == 0 && !is_null($case->magistrate_decision))
                                         Case invalid/dismissed
                                     @else
                                         N/A
@@ -192,11 +204,25 @@
                             <tr>
                                 <td><b>Fine (if any)</b></td>
                                 <td>
-                                    @if($case->fine < 1)
-                                        No fine set
-                                    @else
-                                        {{ $case->fine }}
-                                    @endif
+                                    {{ $case->fine }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Fine amount paid</b></td>
+                                <td>
+                                    {{ $case->fine_paid }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Bail (if any)</b></td>
+                                <td>
+                                    {{ $case->bail }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Bail amount paid</b></td>
+                                <td>
+                                    {{ $case->bail_paid }}
                                 </td>
                             </tr>
                         </table>

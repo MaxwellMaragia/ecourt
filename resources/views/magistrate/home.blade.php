@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                             @foreach($cases as $case)
-                                @if($case->magistrate_decision == '')
+                                @if(is_null($case->magistrate_decision))
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $case->offender_name }}</td>

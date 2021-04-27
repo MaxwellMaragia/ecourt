@@ -1,4 +1,4 @@
-@extends('prosecutor.layouts.app')
+@extends('magistrate.layouts.app')
 @section('headSection')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -38,24 +38,26 @@
                             </thead>
                             <tbody>
                             @foreach($cases as $case)
-                                <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $case->offender_name }}</td>
-                                    <td>{{ $case->identification }}</td>
-                                    <td>{{ $case->offender_mobile }}</td>
-                                    <td>{{ $case->offence_location }}</td>
-                                    <td>
-                                        @foreach($case->offences as $offence)
-                                            {{ $offence->offence }}
-                                            @if( !$loop->last)
-                                                ,
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('select_case_outcome',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
+                                @if(is_null($case->magistrate_decision))
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>{{ $case->offender_name }}</td>
+                                        <td>{{ $case->identification }}</td>
+                                        <td>{{ $case->offender_mobile }}</td>
+                                        <td>{{ $case->offence_location }}</td>
+                                        <td>
+                                            @foreach($case->offences as $offence)
+                                                {{ $offence->offence }}
+                                                @if( !$loop->last)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('select_case_outcome',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                             <tfoot>

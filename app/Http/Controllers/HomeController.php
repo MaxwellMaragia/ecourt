@@ -54,7 +54,7 @@ class HomeController extends Controller
               }
               else if(Auth::user()->category == 'prosecutor'){
                   $user_id = Auth::user()->id;
-                  $cases = misdeed::where('prosecutor',$user_id AND 'magistrate',NULL)->get();
+                  $cases = misdeed::where('prosecutor',$user_id)->get();
 
                   return view('prosecutor.home',compact('cases'));
               }

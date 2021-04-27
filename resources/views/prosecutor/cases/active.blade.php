@@ -38,24 +38,26 @@
                             </thead>
                             <tbody>
                             @foreach($cases as $case)
-                                <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $case->offender_name }}</td>
-                                    <td>{{ $case->identification }}</td>
-                                    <td>{{ $case->offender_mobile }}</td>
-                                    <td>{{ $case->offence_location }}</td>
-                                    <td>
-                                        @foreach($case->offences as $offence)
-                                            {{ $offence->offence }}
-                                            @if( !$loop->last)
-                                                ,
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('case_outcome',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
+                                @if(is_null($case->magistrate))
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>{{ $case->offender_name }}</td>
+                                        <td>{{ $case->identification }}</td>
+                                        <td>{{ $case->offender_mobile }}</td>
+                                        <td>{{ $case->offence_location }}</td>
+                                        <td>
+                                            @foreach($case->offences as $offence)
+                                                {{ $offence->offence }}
+                                                @if( !$loop->last)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('case_outcome',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                             <tfoot>

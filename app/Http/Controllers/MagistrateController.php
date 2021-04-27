@@ -166,7 +166,7 @@ class MagistrateController extends Controller
 
         $misdeed->magistrate_decision_reason = $request->reason;
         $misdeed->save();
-        $misdeed->notify(new SendNotification());
+        //$misdeed->notify(new SendNotification());
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 }
