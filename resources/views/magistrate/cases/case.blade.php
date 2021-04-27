@@ -1,4 +1,4 @@
-@extends('prosecutor.layouts.app')
+@extends('magistrate.layouts.app')
 @section('headSection')
     <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
