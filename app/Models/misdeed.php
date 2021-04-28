@@ -10,6 +10,27 @@ class misdeed extends Model
 {
     use HasFactory;
     use Notifiable;
+    protected $fillable = [
+        'offender_name',
+        'identification',
+        'nationality',
+        'address',
+        'offender_mobile',
+        'license_number',
+        'age',
+        'gender',
+        'car_registration',
+        'offence_location',
+        'time',
+        'particulars',
+        'mitigating',
+        'agent',
+        'image',
+        'video',
+        'dismissed',
+        'offender_decision',
+    ];
+
 
     public function offences()
     {

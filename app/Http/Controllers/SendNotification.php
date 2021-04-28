@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Nexmo\Laravel\Facade\Nexmo;
 
-
-use Illuminate\Support\Facades\Notification;
-use NotificationChannels\AfricasTalking\AfricasTalkingChannel;
-use NotificationChannels\AfricasTalking\AfricasTalkingMessage;
-
-class SendNotification extends Notification
+class SendNotification extends Controller
 {
     //
-    public function via($notifiable)
-    {
-        return [AfricasTalkingChannel::class];
-    }
-
-    public function toAfricasTalking($notifiable)
-    {
-        return (new AfricasTalkingMessage())
-            ->content('Your SMS message content');
-
+    public function sendSms($mobile_number,$message){
+        Nexmo::message()->send([
+            'to'   => $mobile_number,
+            'from' => '16105552344',
+            'text' => $message
+        ]);
     }
 }

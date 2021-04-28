@@ -9,6 +9,7 @@ use App\Models\offence;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class CaseController extends Controller
 {
@@ -76,41 +77,64 @@ class CaseController extends Controller
 
     public function store(Request $request)
     {
-          $misdeed = new misdeed();
-          $misdeed->offender_name = $request->names;
-          $misdeed->identification = $request->id;
-          $misdeed->nationality = $request->nationality;
-          $misdeed->address = $request->address;
-          $misdeed->offender_mobile = $request->mobile;
-          $misdeed->license_number = $request->dl;
-          $misdeed->age = $request->age;
-          $misdeed->gender = $request->gender;
-          $misdeed->car_registration = $request->car_registration;
-          $misdeed->offence_location = $request->incident_location;
-          $misdeed->time = $request->time;
-          $misdeed->particulars = $request->particulars;
-          $misdeed->mitigating = $request->mitigating;
-          $misdeed->agent = Auth::user()->id;
+
+
+
           if($request->dismissed){
-              $misdeed->dismissed = $request->dismissed;
+              $dismissed = $request->dismissed;
           }else{
-              $misdeed->dismissed = 0;
+              $dismissed = 0;
           }
 
-          $misdeed->offender_decision = 1;
           if($request->hasFile('image'))
           {
-              $misdeed->image = $request->image->store('public/files/cases');
+              $image = $request->image->store('public/files/cases');
+          }else{
+              $image = "public/files/cases/noimage.png";
           }
 
           if($request->hasFile('video'))
           {
-                $misdeed->video = $request->video->store('public/files/cases');
+              $video = $request->video->store('public/files/cases');
+          }else{
+              $video = NULL;
           }
 
-          $misdeed->save();
+        $data = array(
+            'offender_name' => $request->names,
+            'identification' => $request->id,
+            'nationality' => $request->nationality,
+            'address' => $request->address,
+            'offender_mobile' => $request->mobile,
+            'license_number' => $request->dl,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'car_registration' => $request->car_registration,
+            'offence_location' => $request->incident_location,
+            'time' => $request->time,
+            'particulars' => $request->particulars,
+            'mitigating' => $request->mitigating,
+            'agent' => Auth::user()->id,
+            'image'=>$image,
+            'video'=>$video,
+            'dismissed'=>$dismissed,
+            'offender_decision'=>1
+
+        );
+
+          $misdeed = misdeed::create($data);
           $misdeed->offences()->sync($request->charge);
 
+        if($request->dismissed){
+            $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you, however you have been pardoned";
+        }else{
+            $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you and is awaiting prosecutor decision";
+        }
+          Nexmo::message()->send([
+                'to'   => $request->mobile,
+                'from' => '254707338839',
+                'text' => $message
+            ]);
           return redirect()->back()->with('success',"Case has been submitted");
 
 
@@ -134,7 +158,13 @@ class CaseController extends Controller
         $misdeed = misdeed::find($id);
         $misdeed->prosecutor = $request->prosecutor;
         $misdeed->save();
+        $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been assigned a prosecutor, you will receive feedback in due time";
 
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
         return redirect()->back()->with('success', 'Prosecutor for case selected');
     }
 

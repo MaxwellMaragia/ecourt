@@ -8,6 +8,7 @@ use App\Models\misdeed;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class ProsecutorController extends Controller
 {
@@ -72,13 +73,23 @@ class ProsecutorController extends Controller
         if($request->outcome == 1){
            $misdeed->magistrate = $request->magistrate;
            $misdeed->prosecutor_decision = $request->outcome;
+           $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as valid and assigned to a magistrate";
+
         }else if($request->outcome == 0){
            $misdeed->prosecutor_decision = $request->outcome;
+           $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as invalid and has been dropped";
+
         }
 
         $misdeed->prosecutor_decision_reason = $request->reason;
         $misdeed->save();
 
+
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 

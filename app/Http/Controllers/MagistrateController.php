@@ -7,8 +7,10 @@ use App\Models\court_user;
 use App\Models\misdeed;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SendNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Nexmo\Laravel\Facade\Nexmo;
 use NotificationChannels\AfricasTalking\AfricasTalkingChannel;
 use NotificationChannels\AfricasTalking\AfricasTalkingMessage;
 
@@ -160,13 +162,21 @@ class MagistrateController extends Controller
         if($request->outcome == 1){
             $misdeed->fine = $request->fine;
             $misdeed->magistrate_decision = $request->outcome;
+            $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as valid, you have been fined ".$request->fine." ksh";
         }else if($request->outcome == 0){
             $misdeed->magistrate_decision = $request->outcome;
+            $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as invalid and has been dropped";
         }
 
         $misdeed->magistrate_decision_reason = $request->reason;
         $misdeed->save();
-        //$misdeed->notify(new SendNotification());
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
+
+
 }
