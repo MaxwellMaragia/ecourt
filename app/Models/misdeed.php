@@ -36,9 +36,4 @@ class misdeed extends Model
     {
         return $this->belongsToMany('App\Models\offence','misdeed_offences');
     }
-
-    public function routeNotificationForAfricasTalking($notification)
-    {
-        return $this->offender_mobile;
-    }
 }

@@ -23,7 +23,7 @@ class CaseController extends Controller
         if(Auth::user()->category == 'agent'){
             $offences = offence::all();
             $courts = court::all();
-            return view('agent.home',compact('offences','courts'));
+            return view('police.home',compact('offences','courts'));
         }
         else{
             redirect(route('login'));
@@ -36,7 +36,51 @@ class CaseController extends Controller
         if(Auth::user()->category == 'agent'){
             $offences = offence::all();
             $courts = court::all();
-            return view('agent.home',compact('offences','courts'));
+            $total_cases = misdeed::where('agent',Auth::user()->id)->get();
+            $solved_cases = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->get();
+            $pending_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->get();
+            $recent_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->take(3)->get();
+
+            return view('police.home',compact('offences','courts','total_cases','solved_cases','recent_cases','pending_cases'));
+        }
+        else{
+            redirect(route('login'));
+        }
+    }
+
+    public function total()
+    {
+        if(Auth::user()->category == 'agent'){
+
+            $total_cases = misdeed::where('agent',Auth::user()->id)->paginate(5);
+            $total = misdeed::where('agent',Auth::user()->id)->count();
+            return view('police.cases.total',compact('total_cases','total'));
+        }
+        else{
+            redirect(route('login'));
+        }
+    }
+
+    public function pending()
+    {
+        if(Auth::user()->category == 'agent'){
+
+            $total_cases = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->paginate(5);
+            $total = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->count();
+            return view('police.cases.pending',compact('total_cases','total'));
+        }
+        else{
+            redirect(route('login'));
+        }
+    }
+
+    public function closed()
+    {
+        if(Auth::user()->category == 'agent'){
+
+            $total_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->paginate(5);
+            $total = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->count();
+            return view('police.cases.closed',compact('total_cases','total'));
         }
         else{
             redirect(route('login'));
@@ -47,7 +91,7 @@ class CaseController extends Controller
     {
         if(Auth::user()->category == 'agent'){
             $offences = offence::all();
-            return view('agent.accepted',compact('offences'));
+            return view('police.accepted',compact('offences'));
         }
         else{
             redirect(route('login'));
@@ -78,7 +122,14 @@ class CaseController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request,[
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'video' => 'video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:30000',
+            'names' => 'required|max:30|min:5|string',
+            'id' => 'required|digits:8',
+            'mobile' => 'required|digits:12',
 
+        ]);
 
           if($request->dismissed){
               $dismissed = $request->dismissed;
@@ -135,22 +186,103 @@ class CaseController extends Controller
                 'from' => '254707338839',
                 'text' => $message
             ]);
-          return redirect()->back()->with('success',"Case has been submitted");
 
-
+        $number = $misdeed->id;
+        return redirect(route('success'))->with('number',$number)->with('message','submit');
+        //return route('success')->with('number',$number);
     }
 
-
+    public function success(){
+        if(session('number')){
+            return view('police.success');
+        }else{
+            return redirect(route('home'));
+        }
+    }
 
     public function edit($id)
     {
-        //
+        $case = misdeed::find($id);
+        $offences = offence::all();
+        return view('police.edit',compact('case','offences'));
+    }
+
+    public function show($id)
+    {
+        $case = misdeed::find($id);
+        $offences = offence::all();
+        return view('police.cases.case',compact('case'));
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'video' => 'video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:30000',
+            'names' => 'required|max:30|min:5|string',
+            'id' => 'required|digits:8',
+        ]);
+
+        $misdeed = misdeed::find($id);
+
+        if($request->dismissed){
+            $dismissed = $request->dismissed;
+        }else{
+            $dismissed = 0;
+        }
+
+        if($request->hasFile('image'))
+        {
+            $image = $request->image->store('public/files/cases');
+        }
+        else{
+            $image = $misdeed->image;
+        }
+
+        if($request->hasFile('video'))
+        {
+            $video = $request->video->store('public/files/cases');
+        }else{
+            $video = $misdeed->video;
+        }
+
+        $data = array(
+            'offender_name' => $request->names,
+            'identification' => $request->id,
+            'nationality' => $request->nationality,
+            'address' => $request->address,
+            'license_number' => $request->dl,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'car_registration' => $request->car_registration,
+            'offence_location' => $request->incident_location,
+            'particulars' => $request->particulars,
+            'mitigating' => $request->mitigating,
+            'agent' => Auth::user()->id,
+            'image'=>$image,
+            'video'=>$video,
+            'dismissed'=>$dismissed,
+            'offender_decision'=>1
+
+        );
+
+        misdeed::where('id',$id)->update($data);
+        $misdeed->offences()->sync($request->charge);
+
+        if($request->dismissed){
+            $message = "Hello ".$request->names.", Your case with case number ".$misdeed->id." has been updated and you have been pardoned";
+        }else{
+            $message = "Hello ".$request->names.", Your case with case number ".$misdeed->id." has been updated";
+        }
+//        Nexmo::message()->send([
+//            'to'   => $request->mobile,
+//            'from' => '254707338839',
+//            'text' => $message
+//        ]);
+
+        $number = $misdeed->id;
+        return redirect(route('success'))->with('number',$number)->with('message','update');
     }
 
     public function assignProsecutor(Request $request, $id)
@@ -171,6 +303,24 @@ class CaseController extends Controller
     public function destroy($id)
     {
         //
+        $misdeed = misdeed::find($id);
+        $number = $misdeed->id;
+        $misdeed->delete();
+        $misdeed->offences()->detach();
+        $message = "Hello ".$misdeed->offender_name.", Your case with case number ".$misdeed->id." has been dropped and deleted.";
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
+        return redirect(route('success'))->with('number',$number)->with('message','delete');
+    }
+
+    public function search(Request $request){
+        $cases = misdeed::where('identification',$request->id)->paginate(5);
+        $total = misdeed::where('identification',$request->id)->count();
+        $id = $request->id;
+        return view('police.cases.search',compact('cases','total','id'));
     }
 
 

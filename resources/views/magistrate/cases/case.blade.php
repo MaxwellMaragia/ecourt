@@ -41,7 +41,7 @@
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="outcome" id="proceed" value="1">
-                                                Proceed with case (Select magistrate)
+                                                Proceed with case (Set fine amount)
                                             </label>
                                         </div>
                                     </div>

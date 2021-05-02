@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\court;
 use App\Models\court_user;
 use App\Models\misdeed;
+use App\Models\Partner;
 use App\Models\station;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,4 +64,6 @@ class HomeController extends Controller
          }
       }
    }
+
+
 }

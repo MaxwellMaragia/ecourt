@@ -51,35 +51,51 @@ class Profile extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
+        if(Auth::user()->id == $id){
+            $user = User::find($id);
+            return view('police.profile',compact('user'));
+        }else{
+            return route('login');
+        }
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['confirmed'],
+            'file' => ['image','mimes:jpeg,png,jpg,gif,svg','max:5048']
+        ]);
+
+
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+
+        if($request->filled('password'))
+        {
+            $user->password = Hash::make($request->password);
+        }
+        if($request->hasFile('file'))
+        {
+            $user->avatar = $request->file->store('public/files/profile');
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success',"Your account updated successfully'");
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

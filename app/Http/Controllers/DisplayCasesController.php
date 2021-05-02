@@ -35,14 +35,10 @@ class DisplayCasesController extends Controller
                 }
                 return view('station admin.cases.active',compact('cases','agents'));
             }
-
-
         }
         else{
             redirect(route('login'));
         }
-
-
     }
 
     public function closed(){
@@ -63,8 +59,6 @@ class DisplayCasesController extends Controller
                 }
                 return view('station admin.cases.closed',compact('cases','agents'));
             }
-
-
         }
         else{
             redirect(route('login'));

@@ -23,9 +23,7 @@ class CourtController extends Controller
         else{
             redirect(route('login'));
         }
-
     }
-
 
     public function create()
     {
@@ -36,7 +34,6 @@ class CourtController extends Controller
         else{
             redirect(route('login'));
         }
-
     }
 
 
@@ -54,7 +51,6 @@ class CourtController extends Controller
 
         $court->save();
         return (redirect()->back()->with('success', 'court saved successfully'));
-
     }
 
 

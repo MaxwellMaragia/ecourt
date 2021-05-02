@@ -21,6 +21,7 @@
           <li><a href="{{ route('station_admins.index') }}"><i class="fa fa-users text-aqua"></i> <span>Station admins</span></a></li>
           <li><a href="{{ route('court_admins.index') }}"><i class="fa fa-user-circle text-aqua"></i> <span>Court admins</span></a></li>
           <li><a href="{{ route('offences.index') }}"><i class="fa fa-warning text-aqua"></i> <span>Offence categories</span></a></li>
+          <li><a href="{{ route('partners.index') }}"><i class="fa fa-home text-aqua"></i> <span>Partners</span></a></li>
 
     </ul>
 

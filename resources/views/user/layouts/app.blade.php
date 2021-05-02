@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
     @include('user/layouts/head')
 </head>
-<body class="landing">
-
+<body>
+<div id="page">
 @include('user/layouts/nav')
 <!-- end header -->
 
@@ -14,5 +14,6 @@
 
 <!-- start footer -->
 @include('user/layouts/footer')
+</div>
 </body>
 </html>

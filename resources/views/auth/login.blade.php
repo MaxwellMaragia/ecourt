@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <img src="{{ asset('logo.png') }}" alt="ecourt logo" height="150px" width="150px">
+        <img src="{{ asset('courtofarms.png') }}" alt="ecourt logo" height="150px" width="150px">
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
