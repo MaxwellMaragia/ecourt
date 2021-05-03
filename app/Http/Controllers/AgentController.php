@@ -58,6 +58,7 @@ class AgentController extends Controller
 
         $user = new User();
         $user->email = $request->email;
+        $user->avatar = "public/files/profile/avatar.jpg";
         $user->name = $request->name;
         $user->staff_id = $request->staff_id;
         $user->category = 'agent';

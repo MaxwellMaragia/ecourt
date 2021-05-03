@@ -44,6 +44,7 @@ class StationAdminController extends Controller
         $user = new User();
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->avatar = "public/files/profile/avatar.jpg";
         $user->staff_id = $request->staff_id;
         $user->category = 'station admin';
         $user->password = Hash::make($request->staff_id);
