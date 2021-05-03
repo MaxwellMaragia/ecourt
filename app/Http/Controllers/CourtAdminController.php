@@ -46,6 +46,7 @@ class CourtAdminController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->staff_id = $request->staff_id;
+        $user->avatar = "public/files/profile/avatar.jpg";
         $user->category = 'court admin';
         $user->password = Hash::make($request->staff_id);
         $user->save();
