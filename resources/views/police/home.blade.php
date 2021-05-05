@@ -90,21 +90,21 @@
                                     <h4>"{{ $case->offender_name }}"</h4>
                                     <p>{{ $case->particulars }}</p>
                                     <ul>
-                                        <li>
-                                            <form id="delete-form-{{ $case->id }}" action="{{ route('cases.destroy',$case->id) }}" style="display: none;" method="post">
-                                                {{@csrf_field()}}
-                                                {{@method_field('DELETE')}}
-                                            </form>
-                                            <a data-toggle="tooltip" class="btn_delete"><i class="icon-trash" onclick="
-                                                    if(confirm('Are you sure you want to delete this case?'))
-                                                    {event.preventDefault();
-                                                    document.getElementById('delete-form-{{ $case->id }}').submit();
-                                                    }
-                                                    else{
-                                                    event.preventDefault();
-                                                    }
-                                                    "></i>Delete</a>
-                                        </li>
+{{--                                        <li>--}}
+{{--                                            <form id="delete-form-{{ $case->id }}" action="{{ route('cases.destroy',$case->id) }}" style="display: none;" method="post">--}}
+{{--                                                {{@csrf_field()}}--}}
+{{--                                                {{@method_field('DELETE')}}--}}
+{{--                                            </form>--}}
+{{--                                            <a data-toggle="tooltip" class="btn_delete"><i class="icon-trash" onclick="--}}
+{{--                                                    if(confirm('Are you sure you want to delete this case?'))--}}
+{{--                                                    {event.preventDefault();--}}
+{{--                                                    document.getElementById('delete-form-{{ $case->id }}').submit();--}}
+{{--                                                    }--}}
+{{--                                                    else{--}}
+{{--                                                    event.preventDefault();--}}
+{{--                                                    }--}}
+{{--                                                    "></i>Delete</a>--}}
+{{--                                        </li>--}}
                                         <li><a href="{{ route('cases.edit',$case->id) }}"><i class="icon-edit-3"></i> Edit</a></li>
                                     </ul>
                                 </div>

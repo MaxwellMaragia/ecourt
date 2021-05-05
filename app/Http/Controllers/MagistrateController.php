@@ -171,11 +171,11 @@ class MagistrateController extends Controller
 
         $misdeed->magistrate_decision_reason = $request->reason;
         $misdeed->save();
-        Nexmo::message()->send([
-            'to'   => $misdeed->offender_mobile,
-            'from' => '254707338839',
-            'text' => $message
-        ]);
+//        Nexmo::message()->send([
+//            'to'   => $misdeed->offender_mobile,
+//            'from' => '254707338839',
+//            'text' => $message
+//        ]);
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 

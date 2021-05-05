@@ -91,7 +91,8 @@ class CaseController extends Controller
     {
         if(Auth::user()->category == 'agent'){
             $offences = offence::all();
-            return view('police.accepted',compact('offences'));
+            $courts = court::all();
+            return view('police.accepted',compact('offences','courts'));
         }
         else{
             redirect(route('login'));
@@ -181,11 +182,76 @@ class CaseController extends Controller
         }else{
             $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you and is awaiting prosecutor decision";
         }
-          Nexmo::message()->send([
-                'to'   => $request->mobile,
-                'from' => '254707338839',
-                'text' => $message
-            ]);
+//          Nexmo::message()->send([
+//                'to'   => $request->mobile,
+//                'from' => '254707338839',
+//                'text' => $message
+//            ]);
+
+        $number = $misdeed->id;
+        return redirect(route('success'))->with('number',$number)->with('message','submit');
+        //return route('success')->with('number',$number);
+    }
+
+    public function denied(Request $request)
+    {
+
+        $this->validate($request,[
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'video' => 'video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:30000',
+            'names' => 'required|max:30|min:5|string',
+            'id' => 'required|digits:8',
+            'mobile' => 'required|digits:12',
+
+        ]);
+
+        if($request->hasFile('image'))
+        {
+            $image = $request->image->store('public/files/cases');
+        }else{
+            $image = "public/files/cases/noimage.png";
+        }
+
+        if($request->hasFile('video'))
+        {
+            $video = $request->video->store('public/files/cases');
+        }else{
+            $video = NULL;
+        }
+
+        $data = array(
+            'offender_name' => $request->names,
+            'identification' => $request->id,
+            'nationality' => $request->nationality,
+            'address' => $request->address,
+            'offender_mobile' => $request->mobile,
+            'license_number' => $request->dl,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'car_registration' => $request->car_registration,
+            'offence_location' => $request->incident_location,
+            'time' => $request->time,
+            'particulars' => $request->particulars,
+            'mitigating' => $request->mitigating,
+            'agent' => Auth::user()->id,
+            'image'=>$image,
+            'video'=>$video,
+            'court'=>$request->court,
+            'court_appearance_date'=>$request->court_appearance_date,
+            'bail'=>$request->bail,
+            'offender_decision'=>0
+
+        );
+
+        $misdeed = misdeed::create($data);
+        $misdeed->offences()->sync($request->charge);
+        $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you, your bail amount is ".$request->bail." and court appearance date is ".$request->court_date;
+
+//        Nexmo::message()->send([
+//            'to'   => $request->mobile,
+//            'from' => '254707338839',
+//            'text' => $message
+//        ]);
 
         $number = $misdeed->id;
         return redirect(route('success'))->with('number',$number)->with('message','submit');
@@ -292,11 +358,11 @@ class CaseController extends Controller
         $misdeed->save();
         $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been assigned a prosecutor, you will receive feedback in due time";
 
-        Nexmo::message()->send([
-            'to'   => $misdeed->offender_mobile,
-            'from' => '254707338839',
-            'text' => $message
-        ]);
+//        Nexmo::message()->send([
+//            'to'   => $misdeed->offender_mobile,
+//            'from' => '254707338839',
+//            'text' => $message
+//        ]);
         return redirect()->back()->with('success', 'Prosecutor for case selected');
     }
 
@@ -308,11 +374,11 @@ class CaseController extends Controller
         $misdeed->delete();
         $misdeed->offences()->detach();
         $message = "Hello ".$misdeed->offender_name.", Your case with case number ".$misdeed->id." has been dropped and deleted.";
-        Nexmo::message()->send([
-            'to'   => $misdeed->offender_mobile,
-            'from' => '254707338839',
-            'text' => $message
-        ]);
+//        Nexmo::message()->send([
+//            'to'   => $misdeed->offender_mobile,
+//            'from' => '254707338839',
+//            'text' => $message
+//        ]);
         return redirect(route('success'))->with('number',$number)->with('message','delete');
     }
 

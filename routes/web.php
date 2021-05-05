@@ -49,6 +49,7 @@ Route::get('/accepts', [App\Http\Controllers\CaseController::class, 'accepts']);
 Route::get('/denies', [App\Http\Controllers\CaseController::class, 'denies']);
 Route::get('/success', [App\Http\Controllers\CaseController::class, 'success'])->name('success');
 Route::post('/search', [App\Http\Controllers\CaseController::class, 'search'])->name('search');
+Route::post('/denied', [App\Http\Controllers\CaseController::class, 'denied'])->name('denied');
 Route::get('/total', [App\Http\Controllers\CaseController::class, 'total'])->name('total');
 Route::get('/pending-cases', [App\Http\Controllers\CaseController::class, 'pending'])->name('pending');
 Route::get('/closed-cases', [App\Http\Controllers\CaseController::class, 'closed'])->name('closed');

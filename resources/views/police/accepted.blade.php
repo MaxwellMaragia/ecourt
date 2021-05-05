@@ -168,7 +168,7 @@
                                 <div class="col-lg-8">
                                     <a href="help.html" class="btn_support">This form is for suspect who has denied the accusation!</a>
                                     <div id="message-support"></div>
-                                    <form method="post" action="{{ route('cases.store') }}" enctype="multipart/form-data" autocomplete="off">
+                                    <form method="post" action="{{ route('denied') }}" enctype="multipart/form-data" autocomplete="off">
                                         {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-md-6">
@@ -274,7 +274,29 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Select court</label>
+                                                    <select name="court" id="court" class="form-control" required="required">
+                                                        <option value="">Select court</option>
+                                                        @foreach($courts as $court)
+                                                            <option value="{{ $court->id }}">{{ $court->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group required">
+                                                    <label>Date to appear in court</label>
+                                                    <input class="form-control" type="datetime-local" name="court_appearance_date" id="time" required="required" value="{{ old('court_date') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group required">
+                                            <Label>Bail amount</Label>
+                                            <input class="form-control" type="number" name="bail" id="bail" required="required" value="{{ old('bail') }}">
+                                        </div>
                                         <div class="form-group add_top_30 text-center">
                                             <input type="submit" value="Submit" class="btn_1 rounded" id="submit-contact">
                                         </div>
