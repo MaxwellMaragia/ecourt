@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <input class="form-control" type="number" name="dl" id="dl" value="{{ old('dl') }}" placeholder="Driving license number">
+                                                    <input class="form-control" type="text" name="dl" id="dl" value="{{ old('dl') }}" placeholder="Driving license number">
                                                 </div>
                                             </div>
                                         </div>
@@ -203,7 +203,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <input class="form-control" type="number" name="dl" id="dl" value="{{ old('dl') }}" placeholder="Driving license number">
+                                                    <input class="form-control" type="text" name="dl" id="dl" value="{{ old('dl') }}" placeholder="Driving license number">
                                                 </div>
                                             </div>
                                         </div>

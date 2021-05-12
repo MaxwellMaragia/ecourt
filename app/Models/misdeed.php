@@ -28,7 +28,11 @@ class misdeed extends Model
         'image',
         'video',
         'dismissed',
-        'offender_decision',
+        'court',
+        'court_appearance_date',
+        'fine',
+        'bail',
+
     ];
 
 

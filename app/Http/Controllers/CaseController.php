@@ -247,11 +247,11 @@ class CaseController extends Controller
         $misdeed->offences()->sync($request->charge);
         $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you, your bail amount is ".$request->bail." and court appearance date is ".$request->court_date;
 
-//        Nexmo::message()->send([
-//            'to'   => $request->mobile,
-//            'from' => '254707338839',
-//            'text' => $message
-//        ]);
+        Nexmo::message()->send([
+            'to'   => $request->mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
 
         $number = $misdeed->id;
         return redirect(route('success'))->with('number',$number)->with('message','submit');

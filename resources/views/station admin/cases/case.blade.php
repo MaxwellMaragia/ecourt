@@ -27,7 +27,7 @@
                 <div class="table-responsive">
 
                     <div class="form-group form-inline">
-                        @if($edit == 1 && $case->dismissed == 0)
+                            @if($edit == 1 && $case->dismissed == 0 && $case->offender_decission == 1)
                             @include('includes.messages')
                             <form action="{{ route('assignprosecutor',$case->id) }}" method="post">
                                 {{ csrf_field() }}
@@ -42,6 +42,20 @@
                                 </select>
                                 <button class="btn btn-info" type="submit">Assign case</button>
                             </form>
+                            @elseif($edit == 1 && $case->dismissed == 0 && $case->offender_decission == 0)
+                                @include('includes.messages')
+                                <form action="{{ route('assignprosecutor',$case->id) }}" method="post">
+                                    {{ csrf_field() }}
+                                    <select name="prosecutor" id="prosecutor" class="form-control" required="required">
+                                        <option value="">Select prosecutor</option>
+                                        @foreach($court->users as $key => $user)
+                                            @if($user->category == 'prosecutor')
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <button class="btn btn-info" type="submit">Assign case</button>
+                                </form>
                         @endif
                     </div>
 

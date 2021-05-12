@@ -56,15 +56,11 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="box_general general_info">
-                        <h3>Create case <small>(Suspect accepts)</small></h3>
+                        <h3>Create case</h3>
                         <p>
-                            Create new case where the suspect has accepted the charge. Might be eligible for pardon
+                            Create new case and select the decision of the offender accordingly. Might be eligible for pardon
                         </p>
                         <a href="{{ url('accepts') }}" class="btn_1 small">Proceed</a>
-                        <hr>
-                        <h3>Create case <small>(Suspect denies)</small></h3>
-                        <p>Create new case where the suspect denies the charge or any wrong doing. Bail payment will be triggered<br></p>
-                        <a href="{{ url('denies') }}" class="btn_1 small">Proceed</a>
                         <hr>
 
                     </div>

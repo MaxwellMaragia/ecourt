@@ -122,7 +122,6 @@ class MagistrateController extends Controller
         $user_id = Auth::user()->id;
         $get_court = court_user::where('user_id',$user_id)->first();
         $court_id = $get_court->court_id;
-
         $court = court::find($court_id);
         $edit = 1;
         $prosecutor_id = $case->prosecutor;

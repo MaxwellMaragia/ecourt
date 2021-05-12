@@ -20,78 +20,40 @@
         </section>
         <!-- /hero_single -->
 
-        <div class="bg_color_1">
-            <div class="container margin_60_35">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="box_feat">
-                            <i class="pe-7s-speaker"></i>
-                            <h3><strong>1</strong> One<em>Case recorded</em></h3>
-                            <p>Traffic officer quickly records offence details</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="box_feat">
-                            <i class="pe-7s-flag"></i>
-                            <h3><strong>2</strong> two<em>Legal outcome</em></h3>
-                            <p>Legal personnel efficiently gives case verdict</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="box_feat">
-                            <i class="pe-7s-mail"></i>
-                            <h3><strong>3</strong> three<em>Suspect notified</em></h3>
-                            <p>The suspect is notified by SMS through the whole stage</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
+{{--        <div class="bg_color_1">--}}
+{{--            <div class="container margin_60_35">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <div class="box_feat">--}}
+{{--                            <i class="pe-7s-speaker"></i>--}}
+{{--                            <h3><strong>1</strong> One<em>Case recorded</em></h3>--}}
+{{--                            <p>Traffic officer quickly records offence details</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <div class="box_feat">--}}
+{{--                            <i class="pe-7s-flag"></i>--}}
+{{--                            <h3><strong>2</strong> two<em>Legal outcome</em></h3>--}}
+{{--                            <p>Legal personnel efficiently gives case verdict</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <div class="box_feat">--}}
+{{--                            <i class="pe-7s-mail"></i>--}}
+{{--                            <h3><strong>3</strong> three<em>Suspect notified</em></h3>--}}
+{{--                            <p>The suspect is notified by SMS through the whole stage</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <!-- /row -->--}}
 
-            </div>
-            <!-- /container -->
-        </div>
+{{--            </div>--}}
+{{--            <!-- /container -->--}}
+{{--        </div>--}}
         <!-- /bg_color_1 -->
 
-        <div class="feat_blocks">
-            <div class="container-fluid h-100">
-                <div class="row h-100 justify-content-center align-items-center">
-                    <div class="col-md-6 p-0">
-                        <div class="block_1"><img src="{{ asset('gavel.jpg') }}" alt="" class="img-fluid"></div>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <div class="block_2">
-                            <h3>Welcome to ECourt</h3>
-                            <p>This portal enables quick and easy collaboration between traffic officers and the appropriate legal personnel to solve traffic offences quickly and easily.</p>
-                            <a href="{{ route('login') }}" class="btn_1">Staff login</a>
-                        </div>
-                    </div>
 
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
         <!-- /feat_blocks -->
-
-        <div class="bg_color_1">
-            <div class="container margin_60_35">
-                <div class="margin_60">
-                    <h5 class="text-center add_bottom_30">Our partners!</h5>
-                    <div id="brands" class="owl-carousel owl-theme">
-                        @foreach($partners as $partner)
-                            <div class="item">
-                                <a href="{{ $partner->url }}" target="_blank"><img src="{{ Storage::url($partner->logo) }}" alt=""></a>
-                            </div>
-                    @endforeach
-
-
-                    <!-- /item -->
-                    </div>
-                    <!-- /carousel -->
-                </div>
-            </div>
-        </div>
-
         <div class="bg_color_1">
             <div class="container margin_60_35">
                 <div class="main_title_2">
@@ -130,6 +92,47 @@
             </div>
             <!-- /container -->
         </div>
+
+{{--        <div class="feat_blocks">--}}
+{{--            <div class="container-fluid h-100">--}}
+{{--                <div class="row h-100 justify-content-center align-items-center">--}}
+{{--                    <div class="col-md-6 p-0">--}}
+{{--                        <div class="block_1"><img src="{{ asset('gavel.jpg') }}" alt="" class="img-fluid"></div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-6 p-0">--}}
+{{--                        <div class="block_2">--}}
+{{--                            <h3>Welcome to ECourt</h3>--}}
+{{--                            <p>This portal enables quick and easy collaboration between traffic officers and the appropriate legal personnel to solve traffic offences quickly and easily.</p>--}}
+{{--                            <a href="{{ route('login') }}" class="btn_1">Staff login</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+{{--                <!-- /row -->--}}
+{{--            </div>--}}
+{{--            <!-- /container -->--}}
+{{--        </div>--}}
+
+        <div class="bg_color_1">
+            <div class="container margin_60_35">
+                <div class="margin_60">
+                    <h5 class="text-center add_bottom_30">Our partners!</h5>
+                    <div id="brands" class="owl-carousel owl-theme">
+                        @foreach($partners as $partner)
+                            <div class="item">
+                                <a href="{{ $partner->url }}" target="_blank"><img src="{{ Storage::url($partner->logo) }}" alt=""></a>
+                            </div>
+                    @endforeach
+
+
+                    <!-- /item -->
+                    </div>
+                    <!-- /carousel -->
+                </div>
+            </div>
+        </div>
+
+
         <!-- /bg_color_1 -->
 
 {{--        <div class="call_section_2">--}}
