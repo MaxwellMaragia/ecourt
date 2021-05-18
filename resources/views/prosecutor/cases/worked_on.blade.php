@@ -134,7 +134,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('view_case',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="bottom" title="Edit" href="{{ url('case_outcome',$case->id) }}" class="badge bg-light-blue " disabled><i class="fa fa-eye" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     @endif
