@@ -350,11 +350,12 @@ class CaseController extends Controller
         }else{
             $message = "Hello ".$request->names.", Your case with case number ".$misdeed->id." has been updated";
         }
-//        Nexmo::message()->send([
-//            'to'   => $request->mobile,
-//            'from' => '254707338839',
-//            'text' => $message
-//        ]);
+
+        Nexmo::message()->send([
+            'to'   => $request->mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
 
         $number = $misdeed->id;
         return redirect(route('success'))->with('number',$number)->with('message','update');
@@ -367,11 +368,12 @@ class CaseController extends Controller
         $misdeed->save();
         $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been set as valid, you will receive feedback in due time";
 
-//        Nexmo::message()->send([
-//            'to'   => $misdeed->offender_mobile,
-//            'from' => '254707338839',
-//            'text' => $message
-//        ]);
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
+
         return redirect()->back()->with('success', 'Case verdict selected');
     }
 
@@ -383,11 +385,11 @@ class CaseController extends Controller
         $misdeed->delete();
         $misdeed->offences()->detach();
         $message = "Hello ".$misdeed->offender_name.", Your case with case number ".$misdeed->id." has been dropped and deleted.";
-//        Nexmo::message()->send([
-//            'to'   => $misdeed->offender_mobile,
-//            'from' => '254707338839',
-//            'text' => $message
-//        ]);
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
         return redirect(route('success'))->with('number',$number)->with('message','delete');
     }
 
