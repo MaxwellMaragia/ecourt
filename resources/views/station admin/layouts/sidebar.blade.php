@@ -37,8 +37,8 @@
             </span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="{{ url('active_cases') }}"><i class="fa fa-circle-o"></i>Active</a></li>
-                  <li><a href="{{ url('closed_cases') }}"><i class="fa fa-circle-o"></i>Closed</a></li>
+                  <li><a href="{{ url('active_cases') }}"><i class="fa fa-circle-o"></i>Unapproved</a></li>
+                  <li><a href="{{ url('closed_cases') }}"><i class="fa fa-circle-o"></i>Approved</a></li>
               </ul>
           </li>
     </ul>

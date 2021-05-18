@@ -48,15 +48,16 @@ class HomeController extends Controller
               }
               else if(Auth::user()->category == 'magistrate'){
                   $user_id = Auth::user()->id;
-                  $cases = misdeed::where('magistrate',$user_id)->get();
-
+                  $court_user = court_user::where('user_id',$user_id)->first();
+                  $cases = misdeed::where('court',$court_user->court_id)->get();
                   return view('magistrate.home',compact('cases'));
 
               }
               else if(Auth::user()->category == 'prosecutor'){
                   $user_id = Auth::user()->id;
-                  $cases = misdeed::where('prosecutor',$user_id)->get();
-
+                  //get court
+                  $court_user = court_user::where('user_id',$user_id)->first();
+                  $cases = misdeed::where('court',$court_user->court_id)->get();
                   return view('prosecutor.home',compact('cases'));
               }
               else{

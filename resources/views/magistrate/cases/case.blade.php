@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             @include('includes.messages')
-                            @if($edit == 1)
+                            @if($case->status == '1' && is_null($case->magistrate) && $case->dismissed == 0)
                                 <form action="{{ route('decidecase',$case->id) }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group">
@@ -65,6 +65,22 @@
                                 @endif
                         </div>
                         <table class="table table-bordered table-stripped">
+                            <tr>
+                                <td><b>Case number</b></td>
+                                <td>{{ $case->id }}</td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <td><b>Case verdict</b></td>
+                            <td>
+                                @if($case->status == '0')
+                                    Invalid case
+                                @elseif($case->status == '1')
+                                    Valid case
+                                @else
+                                    Not set yet
+                                @endif
+                            </td>
                             <tr>
                                 <td><b>Case status</b></td>
                                 <td>
@@ -139,6 +155,10 @@
                                 <td>
                                     <img src="{{ Storage::url($case->image) }}" height="160px" width="160px">
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><b>Reporting officer</b></td>
+                                <td>{{ $police->name }}</td>
                             </tr>
                             <tr>
                                 <td><b>Prosecutor</b></td>

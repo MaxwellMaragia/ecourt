@@ -103,7 +103,7 @@ class CaseController extends Controller
         if(Auth::user()->category == 'agent'){
             $offences = offence::all();
             $courts = court::all();
-            return view('agent.denied',compact('offences','courts'));
+            return view('police.denied',compact('offences','courts'));
         }
         else{
             redirect(route('login'));
@@ -152,6 +152,10 @@ class CaseController extends Controller
               $video = NULL;
           }
 
+        foreach(Auth::User()->stations as $key => $station){
+            $court_id = $station->court->id;
+        }
+
         $data = array(
             'offender_name' => $request->names,
             'identification' => $request->id,
@@ -169,6 +173,7 @@ class CaseController extends Controller
             'agent' => Auth::user()->id,
             'image'=>$image,
             'video'=>$video,
+            'court'=>$court_id,
             'dismissed'=>$dismissed,
             'offender_decision'=>1
 
@@ -219,6 +224,10 @@ class CaseController extends Controller
             $video = NULL;
         }
 
+        foreach(Auth::User()->stations as $key => $station){
+            $court_id = $station->court->id;
+        }
+
         $data = array(
             'offender_name' => $request->names,
             'identification' => $request->id,
@@ -236,7 +245,7 @@ class CaseController extends Controller
             'agent' => Auth::user()->id,
             'image'=>$image,
             'video'=>$video,
-            'court'=>$request->court,
+            'court'=>$court_id,
             'court_appearance_date'=>$request->court_appearance_date,
             'bail'=>$request->bail,
             'offender_decision'=>0
@@ -354,16 +363,16 @@ class CaseController extends Controller
     public function assignProsecutor(Request $request, $id)
     {
         $misdeed = misdeed::find($id);
-        $misdeed->prosecutor = $request->prosecutor;
+        $misdeed->status = $request->status;
         $misdeed->save();
-        $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been assigned a prosecutor, you will receive feedback in due time";
+        $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been set as valid, you will receive feedback in due time";
 
 //        Nexmo::message()->send([
 //            'to'   => $misdeed->offender_mobile,
 //            'from' => '254707338839',
 //            'text' => $message
 //        ]);
-        return redirect()->back()->with('success', 'Prosecutor for case selected');
+        return redirect()->back()->with('success', 'Case verdict selected');
     }
 
     public function destroy($id)

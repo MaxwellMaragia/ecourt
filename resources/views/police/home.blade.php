@@ -56,14 +56,22 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="box_general general_info">
-                        <h3>Create case</h3>
+                        <h3>Create case <small>(Suspect accepts charge)</small></h3>
                         <p>
-                            Create new case and select the decision of the offender accordingly. Might be eligible for pardon
+                            Create new case where the suspect accepts the charge. Might be eligible for pardon
                         </p>
                         <a href="{{ url('accepts') }}" class="btn_1 small">Proceed</a>
                         <hr>
 
+                        <h3>Create case <small>(Suspect denies charge)</small></h3>
+                        <p>
+                            Create new case where the suspect denies the charge
+                        </p>
+                        <a href="{{ url('denies') }}" class="btn_1 small ">Proceed</a>
+                        <hr>
                     </div>
+
+
                 </div>
                 <div class="col-lg-8">
                     @foreach($recent_cases as $case)

@@ -39,7 +39,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($agents as $agent)
+                            @foreach($station->users as $key => $agent)
                                 @if($agent->category == 'agent')
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>

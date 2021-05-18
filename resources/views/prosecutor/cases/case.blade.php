@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             @include('includes.messages')
-                            @if($edit == 1 && $case->dismissed == 0)
+                            @if($case->status == '1' && is_null($case->prosecutor) && $case->dismissed == 0)
                                 <form action="{{ route('assignmagistrate',$case->id) }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group">
@@ -41,24 +41,11 @@
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="outcome" id="proceed" value="1">
-                                                Proceed with case (Select magistrate)
+                                                Proceed with case (To await magistrate decision)
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="hide check">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <select name="magistrate" id="prosecutor" class="form-control ">
-                                                    <option value="">Select magistrate</option>
-                                                    @foreach($court->users as $key => $user)
-                                                        @if($user->category == 'magistrate')
-                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label style="margin-top:5px;">Outcome reason</label>
@@ -74,6 +61,22 @@
 
 
                         <table class="table table-bordered table-stripped">
+                            <tr>
+                                <td><b>Case number</b></td>
+                                <td>{{ $case->id }}</td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <td><b>Case verdict</b></td>
+                            <td>
+                                @if($case->status == '0')
+                                    Invalid case
+                                @elseif($case->status == '1')
+                                    Valid case
+                                @else
+                                    Not set yet
+                                @endif
+                            </td>
                             <tr>
                                 <td><b>Case status</b></td>
                                 <td>
@@ -148,6 +151,10 @@
                                 <td>
                                     <img src="{{ Storage::url($case->image) }}" height="160px" width="160px">
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><b>Reporting officer</b></td>
+                                <td>{{ $police->name }}</td>
                             </tr>
                             <tr>
                                 <td><b>Prosecutor</b></td>
@@ -268,21 +275,6 @@
             }
         });
 
-        $('#proceed').change(function(){
-            if($(this).is(":checked")) {
-
-                $('div.check').removeClass("hide");
-                $('#prosecutor').attr('required','required');
-
-            }
-        });
-        $('#terminate').change(function(){
-            if($(this).is(":checked")) {
-                $('div.check').addClass("hide");
-                $('#prosecutor').removeAttr('required');
-
-            }
-        });
 
     </script>
 @endsection

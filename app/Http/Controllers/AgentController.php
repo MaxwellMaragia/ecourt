@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\agent;
+use App\Models\station;
 use App\Models\station_user;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,16 +19,10 @@ class AgentController extends Controller
             //get station id
             $user_id = Auth::user()->id;
             $station_user = station_user::where('user_id',$user_id)->first();
-
-
             $station_id = $station_user->station_id;
+            $station = station::find($station_id);
 
-            $agent_ids = station_user::where('station_id',$station_id)->get();
-            foreach($agent_ids as $agent_id){
-                $agents = User::where('id',$agent_id->user_id)->get();
-            }
-
-            return view('station admin.agents.show',compact('agents'));
+            return view('station admin.agents.show',compact('station'));
         }
         else{
             redirect(route('login'));

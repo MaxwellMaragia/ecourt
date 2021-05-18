@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\court;
 use App\Models\court_user;
+use App\Models\station;
 use App\Models\station_user;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -24,17 +25,14 @@ class DisplayCasesController extends Controller
             //fetch police from station
             $station_user = station_user::where('user_id',$user_id)->first();
             $station_id = $station_user->station_id;
-            $agent_ids = station_user::where('station_id',$station_id)->get();
-            foreach($agent_ids as $agent_id){
-                $agents = User::where('id',$agent_id->user_id)->get();
-            }
-            //end
-            foreach($agents as $agent){
-                if($agent->category == 'agent'){
-                    $cases = misdeed::where('agent',$agent->id)->get();
-                }
-                return view('station admin.cases.active',compact('cases','agents'));
-            }
+            $station = station::find($station_id);
+            $court = $station->court_id;
+
+            $cases = misdeed::where('court',$court)->get();
+            $type = "Active cases";
+
+            return view('station admin.cases.active',compact('cases','type'));
+
         }
         else{
             redirect(route('login'));
@@ -48,17 +46,13 @@ class DisplayCasesController extends Controller
             //fetch police from station
             $station_user = station_user::where('user_id',$user_id)->first();
             $station_id = $station_user->station_id;
-            $agent_ids = station_user::where('station_id',$station_id)->get();
-            foreach($agent_ids as $agent_id){
-                $agents = User::where('id',$agent_id->user_id)->get();
-            }
-            //end
-            foreach($agents as $agent){
-                if($agent->category == 'agent'){
-                    $cases = misdeed::where('agent',$agent->id)->get();
-                }
-                return view('station admin.cases.closed',compact('cases','agents'));
-            }
+            $station = station::find($station_id);
+            $court = $station->court_id;
+
+            $cases = misdeed::where('court',$court)->get();
+
+            $type = "Cases you worked on";
+            return view('station admin.cases.closed',compact('cases','type'));
         }
         else{
             redirect(route('login'));
@@ -75,8 +69,10 @@ class DisplayCasesController extends Controller
         $prosecutor = User::find($prosecutor_id);
         $magistrate_id = $case->magistrate;
         $magistrate = User::find($magistrate_id);
+        $police_id = $case->agent;
+        $police = User::find($police_id);
         $court = court::find($case->court);
-        return view('station admin.cases.case',compact('case','courts','edit','prosecutor','magistrate','court'));
+        return view('station admin.cases.case',compact('case','courts','edit','prosecutor','magistrate','court','police'));
     }
 
     //For fetching states
@@ -89,6 +85,8 @@ class DisplayCasesController extends Controller
         $prosecutor = User::find($prosecutor_id);
         $magistrate_id = $case->magistrate;
         $magistrate = User::find($magistrate_id);
-        return view('station admin.cases.case',compact('case','edit','prosecutor','magistrate'));
+        $police_id = $case->agent;
+        $police = User::find($police_id);
+        return view('station admin.cases.case',compact('case','edit','prosecutor','magistrate','police'));
     }
 }

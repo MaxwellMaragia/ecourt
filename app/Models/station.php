@@ -12,4 +12,8 @@ class station extends Model
     {
         return $this->belongsToMany('App\Models\User','station_users');
     }
+
+    public function court(){
+        return$this->belongsTo('App\Models\court');
+    }
 }

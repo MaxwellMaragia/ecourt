@@ -33,6 +33,7 @@
                             <th>S.no</th>
                             <th>Station name</th>
                             <th>Location</th>
+                            <th>Court</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -43,6 +44,7 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $station->name }}</td>
                                 <td>{{ $station->location }}</td>
+                                <td>{{ $station->court->name }}</td>
                                 <td><a href="{{ route('stations.edit',$station->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td>
                                     <form id="delete-form-{{ $station->id }}" action="{{ route('stations.destroy',$station->id) }}" style="display: none;" method="post">
@@ -67,6 +69,7 @@
                             <th>S.no</th>
                             <th>Station name</th>
                             <th>Location</th>
+                            <th>Court</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>

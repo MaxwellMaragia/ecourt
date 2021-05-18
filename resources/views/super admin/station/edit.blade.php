@@ -45,7 +45,14 @@
                                         <label for="name">Station location</label>
                                         <input type="text" class="form-control" id="name" name="location" value="{{ $station->location }}">
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="name">Court</label>
+                                        <select name="court" id="court" class="form-control" required="required">
+                                            @foreach($courts as $court)
+                                                <option value="{{ $court->id }}" @if($court->id == $station->court->id) selected @endif>{{ $court->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
                             </div>

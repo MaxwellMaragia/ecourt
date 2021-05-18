@@ -22,6 +22,7 @@ class misdeed extends Model
         'car_registration',
         'offence_location',
         'time',
+        'offender_decision',
         'particulars',
         'mitigating',
         'agent',

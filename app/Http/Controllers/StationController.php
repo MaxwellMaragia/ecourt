@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\court;
 use App\Models\station;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,8 @@ class StationController extends Controller
     {
         //
         if (Auth::user()->category == 'super admin') {
-            return view('super admin.station.create');
+            $courts = court::all();
+            return view('super admin.station.create',compact('courts'));
         }
         else{
             redirect(route('login'));
@@ -49,6 +51,7 @@ class StationController extends Controller
         $station = new station();
         $station->name = $request->name;
         $station->location = $request->location;
+        $station->court_id = $request->court;
 
         $station->save();
         return (redirect()->back()->with('success', 'Station saved successfully'));
@@ -65,7 +68,8 @@ class StationController extends Controller
     {
         if (Auth::user()->category == 'super admin') {
             $station = station::where('id', $id)->first();
-            return view('super admin.station.edit', compact('station'));
+            $courts = court::all();
+            return view('super admin.station.edit', compact('station','courts'));
         }
         else{
             redirect(route('login'));
@@ -81,6 +85,7 @@ class StationController extends Controller
         $station = station::find($id);
         $station->name = $request->name;
         $station->location = $request->location;
+        $station->court_id = $request->court;
         $station->save();
 
         return redirect()->back()->with('success', 'Update was successful');

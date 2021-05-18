@@ -39,7 +39,9 @@ class ProsecutorController extends Controller
         $prosecutor = User::find($prosecutor_id);
         $magistrate_id = $case->magistrate;
         $magistrate = User::find($magistrate_id);
-        return view('prosecutor.cases.case',compact('case','court','edit','prosecutor','magistrate'));
+        $police_id = $case->agent;
+        $police = User::find($police_id);
+        return view('prosecutor.cases.case',compact('case','court','edit','prosecutor','magistrate','police'));
     }
 
     //For fetching states
@@ -51,8 +53,10 @@ class ProsecutorController extends Controller
         $prosecutor = User::find($prosecutor_id);
         $magistrate_id = $case->magistrate;
         $magistrate = User::find($magistrate_id);
+        $police_id = $case->agent;
+        $police = User::find($police_id);
         $edit = 0;
-        return view('prosecutor.cases.case',compact('case','edit','prosecutor','magistrate'));
+        return view('prosecutor.cases.case',compact('case','edit','prosecutor','magistrate','police'));
     }
 
     public function workedon(){
@@ -71,12 +75,14 @@ class ProsecutorController extends Controller
         $misdeed = misdeed::find($id);
 
         if($request->outcome == 1){
-           $misdeed->magistrate = $request->magistrate;
+           $misdeed->prosecutor = Auth::user()->id;
            $misdeed->prosecutor_decision = $request->outcome;
-           $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as valid and assigned to a magistrate";
+           $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as valid by the prosecutor, awaiting magistrate decision";
 
         }else if($request->outcome == 0){
+           $misdeed->prosecutor = Auth::user()->id;
            $misdeed->prosecutor_decision = $request->outcome;
+           $misdeed->status = 0;
            $message = "Hello ".$misdeed->offender_name.", your case with case number ".$misdeed->id." has been decided as invalid and has been dropped";
 
         }
@@ -85,11 +91,11 @@ class ProsecutorController extends Controller
         $misdeed->save();
 
 
-//        Nexmo::message()->send([
-//            'to'   => $misdeed->offender_mobile,
-//            'from' => '254707338839',
-//            'text' => $message
-//        ]);
+        Nexmo::message()->send([
+            'to'   => $misdeed->offender_mobile,
+            'from' => '254707338839',
+            'text' => $message
+        ]);
         return redirect()->back()->with('success', 'Case outcome successfully saved');
     }
 
