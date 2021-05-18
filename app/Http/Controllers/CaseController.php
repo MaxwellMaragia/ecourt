@@ -187,11 +187,11 @@ class CaseController extends Controller
         }else{
             $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you and is awaiting prosecutor decision";
         }
-//          Nexmo::message()->send([
-//                'to'   => $request->mobile,
-//                'from' => '254707338839',
-//                'text' => $message
-//            ]);
+          Nexmo::message()->send([
+                'to'   => $request->mobile,
+                'from' => '254707338839',
+                'text' => $message
+            ]);
 
         $number = $misdeed->id;
         return redirect(route('success'))->with('number',$number)->with('message','submit');
