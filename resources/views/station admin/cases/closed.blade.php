@@ -93,6 +93,7 @@
                                 <th>Mobile</th>
                                 <th>Incident location</th>
                                 <th>Offences</th>
+                                <th>Case status</th>
                                 <th>Case dismissed</th>
                                 <th>Suspect decision</th>
                                 <th>Open</th>
@@ -121,6 +122,15 @@
                                             @endforeach
                                         </td>
                                         <td>
+                                        @if(is_null($case->prosecutor))
+                                            Awaiting prosecutor decision
+                                            @elseif(is_null($case->magistrate))
+                                            Awaiting magistrate decision
+                                            @else
+                                            Case decided
+                                        @endif
+                                        </td>
+                                        <td>
                                             @if($case->dismissed == 1)
                                                 <span class="label label-success">Dismissed</span>
                                             @elseif($case->dismissed == 0)
@@ -143,12 +153,14 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>S.no</th>
+                            <th>S.no</th>
                                 <th>Names</th>
                                 <th>Identification</th>
                                 <th>Mobile</th>
                                 <th>Incident location</th>
                                 <th>Offences</th>
+                                <th>Case status</th>
+                                <th>Case dismissed</th>
                                 <th>Suspect decision</th>
                                 <th>Open</th>
                             </tr>

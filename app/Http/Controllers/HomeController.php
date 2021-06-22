@@ -38,7 +38,7 @@ class HomeController extends Controller
                   return view('super admin.home',compact('station_admins','court_admins','stations','courts'));
               }
               else if(Auth::user()->category == 'station admin'){
-                  return redirect(route('agents.index'));
+                  return redirect('/active_cases');
               }
               else if(Auth::user()->category == 'court admin'){
                   return redirect(route('magistrates.index'));
