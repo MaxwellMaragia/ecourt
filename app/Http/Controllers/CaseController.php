@@ -39,7 +39,7 @@ class CaseController extends Controller
             $total_cases = misdeed::where('agent',Auth::user()->id)->get();
             $solved_cases = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->get();
             $pending_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->get();
-            $recent_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->take(3)->get();
+            $recent_cases = misdeed::where('agent',Auth::user()->id)->whereNull('magistrate_decision')->orderBy('id','DESC')->paginate(4);
 
             return view('police.home',compact('offences','courts','total_cases','solved_cases','recent_cases','pending_cases'));
         }
@@ -127,7 +127,7 @@ class CaseController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'video' => 'video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:30000',
             'names' => 'required|max:30|min:5|string',
-            'id' => 'required|digits:8',
+            'id' => 'required|max:10|min:6',
             'mobile' => 'required|digits:12',
 
         ]);
@@ -205,7 +205,7 @@ class CaseController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'video' => 'video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:30000',
             'names' => 'required|max:30|min:5|string',
-            'id' => 'required|digits:8',
+            'id' => 'required|max:10|min:6',
             'mobile' => 'required|digits:12',
 
         ]);

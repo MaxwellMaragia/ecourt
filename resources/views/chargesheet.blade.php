@@ -75,32 +75,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>
-                    Christian names <br>
-                    <b><small>{{ $case->offender_name }}</small></b>
-                </td>
-                <th>
-                    Identity certificate no <br>
-                    <b><small>{{ $case->identification }}</small></b>
-                </th>
-                <th>
-                    Gender <br>
-                    <small>{{ $case->gender }}</small>
-                </th>
-                <th>
-                    Nationality <br>
-                    <small>{{ $case->nationality }}</small>
-                </th>
-                <th>
-                    Apparent age <br>
-                    <small>{{ $case->age }}</small>
-                </th>
-                <th style="border-left: 1px solid black;">
-                    Address <br>
-                    <small>{{ $case->address }}</small>
-                </th>
-            </tr>
+
             <tr>
                 <td>
                     <b>CHARGE/S</b>

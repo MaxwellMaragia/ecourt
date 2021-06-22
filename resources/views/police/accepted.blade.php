@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group required">
-                                <input class="form-control" type="number" name="id" id="id" value="{{ old('id') }}" placeholder="Identification/passport number" required="required">
+                                <input class="form-control" type="text" name="id" id="id" value="{{ old('id') }}" placeholder="Identification/passport number" required="required">
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                         <textarea class="form-control" id="message_contact" name="particulars" style="height:100px;" placeholder="Type in particulars of the offence in detail"></textarea>
                     </div>
                     <div class="form-group required">
-                        <textarea class="form-control" name="message_contact" id="mitigating" style="height:100px;" placeholder="Type in any mitigating circumstances that might have led to the offence" required="required"></textarea>
+                        <textarea class="form-control" name="message_contact" id="mitigating" style="height:100px;" placeholder="Type in any mitigating circumstances that might have led to the offence" ></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

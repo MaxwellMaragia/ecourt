@@ -10,7 +10,9 @@
             </div>
             <div class="col-lg-9 col-12">
                 <ul id="top_menu">
-                    <li><a href="{{ url('accepts') }}" class="btn_top">Open new case</a></li>
+{{--                    <li><a href="{{ url('accepts') }}" class="btn btn-info btn-sm">Open acceptance case</a></li>--}}
+{{--                    <li><a href="{{ url('denies') }}" class="btn btn-danger btn-sm">Open denial case</a></li>--}}
+
                     <li>
                         <div class="dropdown dropdown-user">
                             <a href="#0" class="logged" data-toggle="dropdown"><img src="{{ Storage::url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}"></a>
@@ -41,6 +43,12 @@
                 <nav id="menu" class="main-menu">
                     <ul>
                         <li><span><a href="{{ route('home') }}">Home</a></span></li>
+                        <li><span><a href="#">Create case</a></span>
+                            <ul>
+                                <li><a href="{{ url('accepts') }}">Suspect accepts</a></li>
+                                <li><a href="{{ url('denies') }}">Suspect denies</a></li>
+                            </ul>
+                        </li>
                         <li><span><a href="{{ route('total') }}">Cases</a></span>
                             <ul>
                                 <li><a href="{{ route('total') }}">Total</a></li>

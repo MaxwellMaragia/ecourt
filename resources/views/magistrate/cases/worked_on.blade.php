@@ -63,25 +63,25 @@
                 <div class="box-body">
                     <div class="table-responsive">
                         <div class="table-wrapper">
-                            <div class="table-title">
-                                <div class="row">
-                                    <div class="col-sm-6"><h4>Filter using suspect/s decision on case</h4></div>
-                                    <div class="col-sm-6">
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-info active">
-                                                <input type="radio" name="status" value="all" checked="checked"> All
-                                            </label>
-                                            <label class="btn btn-success">
-                                                <input type="radio" name="status" value="Accepted"> Suspect accepted
-                                            </label>
-                                            <label class="btn btn-danger">
-                                                <input type="radio" name="status" value="Denied"> Suspect denied
-                                            </label>
+{{--                            <div class="table-title">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-sm-6"><h4>Filter using suspect/s decision on case</h4></div>--}}
+{{--                                    <div class="col-sm-6">--}}
+{{--                                        <div class="btn-group" data-toggle="buttons">--}}
+{{--                                            <label class="btn btn-info active">--}}
+{{--                                                <input type="radio" name="status" value="all" checked="checked"> All--}}
+{{--                                            </label>--}}
+{{--                                            <label class="btn btn-success">--}}
+{{--                                                <input type="radio" name="status" value="Accepted"> Suspect accepted--}}
+{{--                                            </label>--}}
+{{--                                            <label class="btn btn-danger">--}}
+{{--                                                <input type="radio" name="status" value="Denied"> Suspect denied--}}
+{{--                                            </label>--}}
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -99,7 +99,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($cases as $case)
-                                    @if(!is_null($case->status) && $case->magistrate == Auth::user()->id)
+                                    @if(!is_null($case->status) && $case->magistrate == Auth::user()->id && $case->offender_decision == 1)
 
                                         <tr @if($case->offender_decision == 1)
                                             data-status="Accepted"

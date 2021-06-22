@@ -117,7 +117,7 @@
                         </div>
                     @endforeach
                     <!-- /review_card -->
-
+                        {{ $recent_cases->render("pagination::default") }}
                 </div>
                 <!-- /col -->
 
