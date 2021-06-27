@@ -80,13 +80,16 @@
                 <td>
                     <b>CHARGE/S</b>
                 </td>
+{{--                <td colspan="18">--}}
+{{--                    @foreach($case->offences as $offence)--}}
+{{--                        {{ $offence->offence }}--}}
+{{--                        @if( !$loop->last)--}}
+{{--                            ,--}}
+{{--                        @endif--}}
+{{--                    @endforeach--}}
+{{--                </td>--}}
                 <td colspan="18">
-                    @foreach($case->offences as $offence)
-                        {{ $offence->offence }}
-                        @if( !$loop->last)
-                            ,
-                        @endif
-                    @endforeach
+                    {{ $case->charge ?? 'N/A' }}
                 </td>
             </tr>
             <tr>

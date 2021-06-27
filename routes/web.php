@@ -53,6 +53,7 @@ Route::post('/denied', [App\Http\Controllers\CaseController::class, 'denied'])->
 Route::get('/total', [App\Http\Controllers\CaseController::class, 'total'])->name('total');
 Route::get('/pending-cases', [App\Http\Controllers\CaseController::class, 'pending'])->name('pending');
 Route::get('/closed-cases', [App\Http\Controllers\CaseController::class, 'closed'])->name('closed');
+Route::get('/with_bail', [App\Http\Controllers\CaseController::class, 'bail'])->name('bail');
 
 
 Route::get('/chargesheet/{id}',[\App\Http\Controllers\ChargeSheetController::class,'chargesheet']);

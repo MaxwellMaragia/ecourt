@@ -74,6 +74,19 @@ class CaseController extends Controller
         }
     }
 
+    public function bail()
+    {
+        if(Auth::user()->category == 'agent'){
+
+            $total_cases = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->where('bail','>',0)->paginate(5);
+            $total = misdeed::where('agent',Auth::user()->id)->whereNotNull('magistrate_decision')->count();
+            return view('police.cases.bail',compact('total_cases','total'));
+        }
+        else{
+            redirect(route('login'));
+        }
+    }
+
     public function closed()
     {
         if(Auth::user()->category == 'agent'){
@@ -168,6 +181,7 @@ class CaseController extends Controller
             'car_registration' => $request->car_registration,
             'offence_location' => $request->incident_location,
             'time' => $request->time,
+            'charge' => $request->charge,
             'particulars' => $request->particulars,
             'mitigating' => $request->mitigating,
             'agent' => Auth::user()->id,
@@ -180,7 +194,7 @@ class CaseController extends Controller
         );
 
           $misdeed = misdeed::create($data);
-          $misdeed->offences()->sync($request->charge);
+//          $misdeed->offences()->sync($request->charge);
 
         if($request->dismissed){
             $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you, however you have been pardoned";
@@ -240,6 +254,7 @@ class CaseController extends Controller
             'car_registration' => $request->car_registration,
             'offence_location' => $request->incident_location,
             'time' => $request->time,
+            'charge' => $request->charge,
             'particulars' => $request->particulars,
             'mitigating' => $request->mitigating,
             'agent' => Auth::user()->id,
@@ -253,7 +268,7 @@ class CaseController extends Controller
         );
 
         $misdeed = misdeed::create($data);
-        $misdeed->offences()->sync($request->charge);
+//        $misdeed->offences()->sync($request->charge);
         $message = "Hello ".$request->names.", A case with case number ".$misdeed->id." has been opened for you, your bail amount is ".$request->bail." and court appearance date is ".$request->court_date;
 
         Nexmo::message()->send([

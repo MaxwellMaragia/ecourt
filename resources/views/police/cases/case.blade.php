@@ -14,6 +14,7 @@
             <div class="col-lg-6" style="margin-top:100px;">
                 <div class="table-responsive">
                     <table class="table table-bordered table-stripped">
+                        <a href="{{ url('chargesheet',$case->id) }}" class="btn btn-info btn-md">Download chargesheet</a>
                         <tr>
                             <td><b>Case status</b></td>
                             <td>
@@ -64,16 +65,20 @@
                             <td><b>Time of offence</b></td>
                             <td>{{ date('Y-m-d H:i:s', strtotime($case->time)) }}</td>
                         </tr>
+{{--                        <tr>--}}
+{{--                            <td><b>Offence category</b></td>--}}
+{{--                            <td>--}}
+{{--                                @foreach($case->offences as $offence)--}}
+{{--                                    {{ $offence->offence }}--}}
+{{--                                    @if( !$loop->last)--}}
+{{--                                        ,--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
                         <tr>
-                            <td><b>Offence category</b></td>
-                            <td>
-                                @foreach($case->offences as $offence)
-                                    {{ $offence->offence }}
-                                    @if( !$loop->last)
-                                        ,
-                                    @endif
-                                @endforeach
-                            </td>
+                            <td><b>Charge/s</b></td>
+                            <td>{{ $case->charge ?? 'N/A' }}</td>
                         </tr>
                         <tr>
                             <td><b>Particulars of offence</b></td>

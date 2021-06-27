@@ -6,7 +6,7 @@
     <meta name="description" content="case listing">
     <meta name="author" content="CODEI SYSTEMS">
 
-    <title>ECOURT | Edit case</title>
+    <title>ECOURT | Create denial case</title>
 
 @endsection
 @section('main-content')
@@ -98,14 +98,19 @@
                         <Label>Exact time of incident</Label>
                         <input class="form-control" type="datetime-local" name="time" id="time" required="required" value="{{ old('time') }}">
                     </div>
+
                     <div class="form-group required">
-                        <label>Select charge</label>
-                        <select name="charge[]" id="multiselect" multiple="multiple" style="height:100px;" class="form-control">
-                            @foreach($offences as $offence)
-                                <option value="{{ $offence->id }}">{{ $offence->offence }} </option>
-                            @endforeach
-                        </select>
+                        <label>Enter charge/s</label>
+                        <textarea class="form-control" id="message_contact" name="charge" style="height:100px;" placeholder="Type in charge the offence/s in detail"></textarea>
                     </div>
+{{--                    <div class="form-group required">--}}
+{{--                        <label>Select charge</label>--}}
+{{--                        <select name="charge[]" id="multiselect" multiple="multiple" style="height:100px;" class="form-control">--}}
+{{--                            @foreach($offences as $offence)--}}
+{{--                                <option value="{{ $offence->id }}">{{ $offence->offence }} </option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
                     <div class="form-group required">
                         <textarea class="form-control" id="message_contact" name="particulars" style="height:100px;" placeholder="Type in particulars of the offence in detail"></textarea>
                     </div>

@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>S.no</th>
@@ -180,6 +180,41 @@
 @section('footerSection')
     <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" ></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap.min.js"> </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"> </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"> </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"> </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"> </script>
+    <script>
+        $(document).ready(function(){
+            $(".btn-group .btn").click(function(){
+                var inputValue = $(this).find("input").val();
+                if(inputValue != 'all'){
+                    var target = $('table tr[data-status="' + inputValue + '"]');
+                    $("table tbody tr").not(target).hide();
+                    target.fadeIn();
+                } else {
+                    $("table tbody tr").fadeIn();
+                }
+            });
+            // Changing the class of status label to support Bootstrap 4
+            var bs = $.fn.tooltip.Constructor.VERSION;
+            var str = bs.split(".");
+            if(str[0] == 4){
+                $(".label").each(function(){
+                    var classStr = $(this).attr("class");
+                    var newClassStr = classStr.replace(/label/g, "badge");
+                    $(this).removeAttr("class").addClass(newClassStr);
+                });
+            }
+
+        });
+
+
+    </script>
     <script>
         $(document).ready(function(){
             $(".btn-group .btn").click(function(){
@@ -205,15 +240,10 @@
         });
 
         $(function () {
-            $('#example1').DataTable()
-            $('#example2').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            })
+            var table = $('#example').DataTable({
+                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+            });
+            table.buttons().container().appendTo( '#example_wrapper .col-sm-6:eq(0)' );
         })
     </script>
 @endsection

@@ -65,6 +65,7 @@
                                 @endif
                         </div>
                         <table class="table table-bordered table-stripped">
+                            <a href="{{ url('chargesheet',$case->id) }}" class="btn btn-info btn-md">Download chargesheet</a>
                             <tr>
                                 <td><b>Case number</b></td>
                                 <td>{{ $case->id }}</td>
@@ -141,6 +142,10 @@
                                         @endif
                                     @endforeach
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><b>Charge/s</b></td>
+                                <td>{{ $case->charge ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td><b>Particulars of offence</b></td>

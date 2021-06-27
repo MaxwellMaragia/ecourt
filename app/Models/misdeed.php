@@ -23,6 +23,7 @@ class misdeed extends Model
         'offence_location',
         'time',
         'offender_decision',
+        'charge',
         'particulars',
         'mitigating',
         'agent',

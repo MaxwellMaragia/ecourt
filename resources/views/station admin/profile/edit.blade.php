@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('station admin.layouts.app')
 @section('main-content')
 @section('headSection')
     <style>
@@ -28,9 +28,8 @@
                 {{ $user->name }}
             </h1>
             <ol class="breadcrumb">
-                <li><a href="{{ route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{ route('user.index') }}">Users</a></li>
-                <li class="active">Edit</li>
+                <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Edit profile</li>
             </ol>
         </section>
 
@@ -62,7 +61,7 @@
                                     <div class="form-group">
                                         <div class="file">
                                             <label for="avatar" class="btn bg-navy btn-flat"><span class="fa fa-upload"></span>   Browse avatar</label>
-                                            <input type="file" name="avatar" accept="image/*" class="form-control" id="avatar">
+                                            <input type="file" name="file" accept="image/*" class="form-control" id="avatar">
                                         </div>
                                     </div>
 
@@ -79,14 +78,6 @@
                                     <div class="form-group">
                                         <label for="name">Phone number</label>
                                         <input type="text" class="form-control" id="mobile" name="phone" placeholder="eg +254707338839" value="{{ $user->phone }}" required="required">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="name">Short bio</label>
-                                        <textarea class="form-control" rows="3" placeholder="Write your short bio...." name="bio">
-                                            {{ $user->bio }}
-                                        </textarea>
-
                                     </div>
 
                                     <div class="form-group">

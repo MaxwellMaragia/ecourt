@@ -38,9 +38,7 @@ class OffenceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'offence' => ['required', 'string','unique:offences'],
-            'fine' => ['required'],
-            'bail' => ['required']
+            'offence' => ['required', 'string','unique:offences']
         ]);
 
         $offence = new offence();
@@ -66,10 +64,7 @@ class OffenceController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'fine' => ['required'],
-            'bail' => ['required']
-        ]);
+
 
         $offence = offence::find($id);
         $offence->fine = $request->fine;

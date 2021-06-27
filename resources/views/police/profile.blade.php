@@ -37,6 +37,10 @@
                             <label>Edit Full name</label>
                             <input class="form-control" type="text" value="{{ $user->name }}" name="name">
                         </div>
+                            <div class="form-group">
+                                <label>Edit phone</label>
+                                <input class="form-control" type="text" value="{{ $user->phone }}" name="phone">
+                            </div>
                         <div class="form-group">
                             <label>New Password</label>
                             <input class="form-control" type="password" id="password1" name="password">

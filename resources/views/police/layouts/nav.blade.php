@@ -54,6 +54,7 @@
                                 <li><a href="{{ route('total') }}">Total</a></li>
                                 <li><a href="{{ route('closed') }}">Closed</a></li>
                                 <li><a href="{{ route('pending') }}">Pending</a></li>
+                                <li><a href="{{ route('bail') }}">Bail</a></li>
                             </ul>
                         </li>
 

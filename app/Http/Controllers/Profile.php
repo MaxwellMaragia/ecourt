@@ -57,7 +57,26 @@ class Profile extends Controller
         //
         if(Auth::user()->id == $id){
             $user = User::find($id);
-            return view('police.profile',compact('user'));
+            if(Auth::user()->category == 'super admin'){
+                return view('super admin.profile.edit',compact('user'));
+            }
+            else if(Auth::user()->category == 'station admin'){
+                return view('station admin.profile.edit',compact('user'));
+            }
+            else if(Auth::user()->category == 'court admin'){
+                return view('court admin.profile.edit',compact('user'));
+            }
+            else if(Auth::user()->category == 'agent'){
+                return view('police.profile',compact('user'));
+            }
+            else if(Auth::user()->category == 'magistrate'){
+                return view('magistrate.profile.edit',compact('user'));
+            }
+            else if(Auth::user()->category == 'prosecutor'){
+                return view('prosecutor.profile.edit',compact('user'));
+            }
+
+
         }else{
             return route('login');
         }
@@ -78,6 +97,7 @@ class Profile extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
 
 
         if($request->filled('password'))

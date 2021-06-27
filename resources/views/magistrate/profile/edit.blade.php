@@ -1,4 +1,4 @@
-@extends('court admin.layouts.app')
+@extends('magistrate.layouts.app')
 @section('main-content')
 @section('headSection')
     <style>
