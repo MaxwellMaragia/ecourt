@@ -91,7 +91,7 @@
                                     <th>Identification</th>
                                     <th>Mobile</th>
                                     <th>Incident location</th>
-                                    <th>Offences</th>
+                                    <th>Charge</th>
                                     <th>Case dismissed</th>
                                     <th>Suspect decision</th>
                                     <th>Open</th>
@@ -112,12 +112,13 @@
                                             <td>{{ $case->offender_mobile }}</td>
                                             <td>{{ $case->offence_location }}</td>
                                             <td>
-                                                @foreach($case->offences as $offence)
-                                                    {{ $offence->offence }}
-                                                    @if( !$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
+{{--                                                @foreach($case->offences as $offence)--}}
+{{--                                                    {{ $offence->offence }}--}}
+{{--                                                    @if( !$loop->last)--}}
+{{--                                                        ,--}}
+{{--                                                    @endif--}}
+{{--                                                @endforeach--}}
+                                                {{ $case->charge ?? 'N/A' }}
                                             </td>
                                             <td>
                                                 @if($case->dismissed == 1)
